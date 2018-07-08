@@ -1,0 +1,60 @@
+{
+  "pages": [
+    "pages/find/indexs",
+    "pages/find/index",
+    "pages/search/index",
+    "pages/now/index",
+    "pages/my/index",
+    "pages/logs/logs",
+    "pages/index/index",
+    "pages/my/my",
+    "pages/user/setEmail",
+    "pages/user/setMobile",
+    "pages/about/update",
+    "pages/article/article",
+    "pages/favorite/index",
+    "pages/comment/comment",
+    "pages/test/test",
+    "pages/fav_song/fav_song"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#646464",
+    "navigationBarTitleText": "即听",
+    "navigationBarTextStyle": "#FBFCFD",
+    "backgroundColor": "#FBFCFD"
+  },
+  "tabBar": {
+    "color": "#898989",
+    "selectedColor": "#f24e71",
+    "backgroundColor": "#f3f3f3",
+    "borderStyle": "#eeeeee",
+    "list": [
+      {
+        "text": "发现",
+        "pagePath": "pages/find/indexs",
+        "iconPath": "images/icons/find.png",
+        "selectedIconPath": "images/icons/find_selected.png"
+      },
+      {
+        "iconPath": "images/icons/now.png",
+        "selectedIconPath": "images/icons/now_selected.png",
+        "pagePath": "pages/now/index",
+        "text": "播放器"
+      },
+      {
+        "text": "我的",
+        "pagePath": "pages/my/my",
+        "iconPath": "images/icons/my.png",
+        "selectedIconPath": "images/icons/my_selected.png"
+      },
+      {
+        "text": "我的",
+        "pagePath": "pages/test/test",
+        "iconPath": "images/icons/my.png",
+        "selectedIconPath": "images/icons/my_selected.png"
+      }
+    ]
+  },
+  "debug": true
+}

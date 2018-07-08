@@ -1,0 +1,3 @@
+<view wx:for="{{songArr}}">
+  <text>{{item.musicId}}</text>
+</view>

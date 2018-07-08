@@ -1,0 +1,84 @@
+<view class='container'>
+  <view class='header'>
+    <view class='hitokoto'>
+      <view class='hitokoto-icon'>
+        <image src="{{hitokotoIcon}}" mode="aspectFit"></image>
+      </view>
+      <view class='hitokoto-con'>
+        <view class='hitokoto-hitokoto'>{{hitokotoHitokoto}}</view>
+        <view class='hitokoto-from'>-「{{hitokotoFrom}}」</view>
+      </view>
+    </view>
+    <view class='avatar'>
+      <image src="{{avatarIcon}}" mode="aspectFitll"></image>
+    </view>
+  </view>
+  <view class='line'></view>
+  <view class='logo'>
+    <image src="{{listenNowLogo}}" mode="aspectFit"></image>
+  </view>
+  <view class="search-cell">
+    <view class="weui-cell__bd">
+      <input class="input-search" placeholder="" value="{{inputVal}}"  bindtap='search1'/>
+    </view>
+    <view class="weui-cell__ft">
+      <button class="btn-search" type="primary" bindtap='search1'>搜索</button>
+    </view>
+  </view>
+  <view class="tab weui-tab">
+    <view class="weui-navbar">
+      <block wx:for="{{tabs}}" wx:key="*this">
+        <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+          <view class='idcIco'>
+            <image src="/images/icons/musicidc{{index}}.png" mode="widthFix"></image>
+          </view>
+          <view class="weui-navbar__title">{{item}}</view>
+        </view>
+      </block>
+      <view class="weui-navbar__slider" style="left: {{sliderLeft}}px;  transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);">
+      </view>
+    </view>
+  </view>
+  <view class="weui-tab__panel">
+    <!--选项一-->
+    <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
+      <view class="menu">
+        <view class="menu_view">
+          <image src="{{avatarIcon}}" mode="widthFix" class="menu3icon"></image>
+          <text>清新独立寂寞的季节非常安静</text>
+        </view>
+        <view class="menu_view">
+          <image src="{{avatarIcon}}" mode="widthFix" class="menu3icon"></image>
+          <text>清新独立寂寞的季节非常安静</text>
+        </view>
+        <view class="menu_view">
+          <image src="{{avatarIcon}}" mode="widthFix" class="menu3icon"></image>
+          <text>清新独立寂寞的季节非常安静</text>
+        </view>
+        <view class="menu_view">
+          <image src="{{avatarIcon}}" mode="widthFix" class="menu3icon"></image>
+          <text>清新独立寂寞的季节非常安静</text>
+        </view>
+        <view class="menu_view">
+          <image src="{{avatarIcon}}" mode="widthFix" class="menu3icon"></image>
+          <text>清新独立寂寞的季节非常安静</text>
+        </view>
+        <view class="menu_view">
+          <image src="{{avatarIcon}}" mode="widthFix" class="menu3icon"></image>
+          <text>清新独立寂寞的季节非常安静</text>
+        </view>
+        <view class="menu_view">
+          <image src="{{avatarIcon}}" mode="widthFix" class="menu3icon"></image>
+          <text>清新独立寂寞的季节非常安静</text>
+        </view>
+        <view class="menu_view" wx:for="{{arry}}" wx:key="">
+          <image src="{{item.src}}" mode="widthFix" class="menu3icon"></image>
+          <text>{{item.text}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="weui-tab__content" hidden="{{activeIndex != 1}}">选项二的内容</view>
+    <view class="weui-tab__content" hidden="{{activeIndex != 2}}">选项三的内容</view>
+    <view class="weui-tab__content" hidden="{{activeIndex != 3}}">排行榜</view>
+  </view>
+</view>

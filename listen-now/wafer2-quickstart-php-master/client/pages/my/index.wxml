@@ -1,0 +1,18 @@
+<!--pages/my/index.wxml-->
+<view class='container'>
+  <view class='header'>
+    <swiper>
+      <swiper-item>
+        <image src='https://listen1.52ledao.com/music/cd.jpg' width="150" height="150"/>
+      </swiper-item>
+      <swiper-item>
+        <image src='https://listen1.52ledao.com/music/cd.jpg' width="150" height="150"/>
+      </swiper-item>
+      <swiper-item>
+        <image src='https://listen1.52ledao.com/music/cd.jpg' width="150" height="150"/>
+      </swiper-item>
+    </swiper>
+  </view>
+  <view class='content'>
+  </view>
+</view>

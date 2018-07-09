@@ -1,0 +1,58 @@
+<view class="content">
+  <view class="bg">
+    <view class="head">
+       <view class="headIcon">
+         <image
+           style="width:70px;height:70px;
+            src="{{logged ? userInfo.avatarUrl : './user-unlogin.png'}}"
+            background-size="cover"
+        ></image>    
+       </view>
+       <view class="login">
+          <button  class="userinfo-nickname" wx:if="{{!logged}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">点击登录 </button><text class="userinfo-nickname" wx:else>{{userInfo.nickName}}</text>
+       </view>
+       <view class="detail">
+         <text >></text>
+       </view>
+    </view>
+    <view class="count">
+       <view class="desc">
+         <view>10</view>
+         <view>关注</view>
+       </view>
+       <view class="desc">
+         <view>267</view>
+         <view>粉丝</view>
+       </view>
+      
+    </view>
+  </view>
+
+  <view class="nav">
+    <view class="nav-item">
+      <view>
+         <image src="/images/icons/shoucang.jpg" style="width:23px;height:23px;"></image>
+      </view>
+      <view>收藏</view>
+    </view>
+    <view class="nav-item">
+      <view>
+         <image src="/images/icons/lishi.jpg" style="width:23px;height:23px;"></image>
+      </view>
+      <view>历史</view>
+    </view>
+    <view class="nav-item">
+      <view>
+         <image src="/images/icons/yejian.jpg" style="width:23px;height:23px;"></image>
+      </view>
+      <view>夜间</view>
+    </view>
+  </view>
+  <view class="hr"></view>
+  <view class="item">
+     <view class="title">消息通知</view>
+     
+  </view>
+<view class="hr"></view>
+</view>
+<text class="title">  其他功能敬请期待。。。</text>

@@ -1,0 +1,60 @@
+<!--index.wxml-->
+<view class="ad_popError" wx:if="{{popErrorMsg}}">{{popErrorMsg}}</view>
+<view class="container" style="">
+  <view class="bg" style=" background-image: url({{poster}});filter: blur(20px); position: absolute;left:0;top:0;right:0;bottom:0;opacity: 0.4;z-index: 0;"></view>
+  <!--歌曲圆圈信息-->
+  <view class="container-content">
+    <view class="fengmian" hidden="{{!islyric}}" bindtap="showlyric">
+      <view class="cicle-infor" style=" background-image: url({{poster}})">
+      </view>
+    </view>
+
+    <!--歌词-->
+    <view class="lyric-content" hidden="{{islyric}}" style="flex:1;margin:30px 0;overflow-y: scroll;" bindtap="showCircle">
+      <view class="lyric" style="overflow-y: scroll;">
+        <block wx:for="{{lyricArr}}" wx:key="key">
+          <view> {{item}} </view>
+        </block>
+      </view>
+    </view>
+
+    <!--选择操作-->
+    <view class="other-content">
+      <view class="icon-choose">
+        <view class="download icon"></view>
+        <view class="like icon" bindtap='fav_song'></view>
+        <view class="add icon" bindtap="addsong"></view>
+      </view>
+      <!--滑动条-->
+      
+      <view class="slider">
+        <view class="section section_gap">
+          <view class="body-view">
+            <slider bindchange="slider3change"  activeColor="#f24e71" value="{{progress}}" /> 
+                <view class='nowtime'>
+                  <view wx:if="{{minute <10 && second<10}}"> 0{{minute}}:0{{second}} </view>
+                  <view wx:elif="{{minute <10 && second>=10}}"> 0{{minute}}:{{second}}</view>
+                  <view wx:elif="{{minute >10 && second<10}}"> {{minute}}:0{{second}}</view>
+                  <view wx:else> {{minute}}:{{second}} </view>
+                </view>
+          </view>
+        </view>
+      </view>
+
+      <!--上一曲 下一曲操作-->
+      <view class="operations">
+        <view class="prev btn" bindtap="prev"></view>
+        <view class="play btn" bindtap="audioPlay" hidden="{{isplaying}}"></view>
+        <view class="pause btn" bindtap="audioPause" hidden="{{!isplaying}}"></view>
+        <view class="next btn" bindtap="next"></view>
+      </view>
+    </view>
+  </view>
+  <view class="lists" style="transform: translateY({{percent}})">
+    <radio-group class="radio-group" bindchange="radioChange">
+      <label class="radio" wx:for="{{items}}" wx:key="key">
+        <radio value="{{item.name}}" checked="{{item.checked}}" data-id="{{index}}" bindtap='shoucang' />{{item.value}}
+      </label>
+    </radio-group>
+  </view>
+</view>

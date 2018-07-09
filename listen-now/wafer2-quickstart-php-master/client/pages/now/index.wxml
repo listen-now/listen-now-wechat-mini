@@ -53,7 +53,7 @@
   <view class="lists" style="transform: translateY({{percent}})">
     <radio-group class="radio-group" bindchange="radioChange">
       <label class="radio" wx:for="{{items}}" wx:key="key">
-        <radio value="{{item.name}}" checked="{{item.checked}}" data-id="{{index}}" bindtap='shoucang' />{{item.value}}
+        <radio value="{{item.name}}" checked="{{item.checked}}" data-id="{{index}}" bindtap='recent' />{{item.value}}
       </label>
     </radio-group>
   </view>

@@ -15,7 +15,8 @@
     "pages/favorite/index",
     "pages/comment/comment",
     "pages/test/test",
-    "pages/fav_song/fav_song"
+    "pages/fav_song/fav_song",
+    "pages/recent/recent"
   ],
   "window": {
     "backgroundTextStyle": "light",

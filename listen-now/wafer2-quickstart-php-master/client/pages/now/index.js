@@ -30,8 +30,16 @@ Page({
 
 
   //收藏
-   shoucang(e){
+   recent(e){
     console.log(e)
+    var id=e.currentTarget.dataset.id
+    wx.setStorageSync('recent', this.data)
+    if(id==0)
+    {
+      wx.navigateTo({
+        url: '/pages/recent/recent?id=1',
+      })
+    }
   },
 
   //收藏最喜欢歌曲

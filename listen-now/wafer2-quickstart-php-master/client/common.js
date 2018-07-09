@@ -58,29 +58,55 @@ const operation = {
                 // header: {}, // 设置请求的 header
                 success: function (res) {
                     // success
-                  console.log("    └─歌词下载完成")
-                    if (!res.data.data.lyric) return false;
-                    let lyric = res.data.data.lyric
-                    let timearr = lyric.split('[')
-                    let obj = {}
-                    let lyricArr = []
-                    // seek 为键  歌词为value
-                    timearr.forEach((item) => {
-                        let key = parseInt(item.split(']')[0].split(':')[0]) * 60 + parseInt(item.split(']')[0].split(':')[1])
-                        let val = item.split(']')[1]
-                        obj[key] = val
-                    })
-                    for (let key in obj) {
-                        // obj[key] = obj[key].split('\n')[0]
-                        //lyricArr.push(obj[key])
-                      if (obj[key] == null){
-                        lyricArr.push('\n')
-                        }else{
-                          lyricArr.push(obj[key])
-                        }
+                    var lrc = res.data.data.lyric;
+                    var lyrics = lrc.split("\n");
+                    var lrcObj = {};
+                    for (var i = 0; i < lyrics.length; i++) {
+                      var lyric = decodeURIComponent(lyrics[i]);
+                      var timeReg = /\[\d*:\d*((\.|\:)\d*)*\]/g;
+                      var timeRegExpArr = lyric.match(timeReg);
+                      if (!timeRegExpArr) continue;
+                      var clause = lyric.replace(timeReg, '');
+                      for (var k = 0, h = timeRegExpArr.length; k < h; k++) {
+                        var t = timeRegExpArr[k];
+                        var min = Number(String(t.match(/\[\d*/i)).slice(1)),
+                          sec = Number(String(t.match(/\:\d*/i)).slice(1));
+                        var time = min * 60 + sec;
+                        lrcObj[time] = clause;
+                      }
                     }
-                    // cb && cb(obj, lyricArr)
+
+                    var lyricArr=lrcObj
                     resolve(lyricArr)
+                   
+                  
+               
+
+
+                  //   console.log(res)
+                  // console.log("    └─歌词下载完成")
+                  //   if (!res.data.data.lyric) return false;
+                  //   let lyric = res.data.data.lyric
+                  //   let timearr = lyric.split('[')
+                  //   let obj = {}
+                  //   let lyricArr = []
+                  //   // seek 为键  歌词为value
+                  //   timearr.forEach((item) => {
+                  //       let key = parseInt(item.split(']')[0].split(':')[0]) * 60 + parseInt(item.split(']')[0].split(':')[1])
+                  //       let val = item.split(']')[1]
+                  //       obj[key] = val
+                  //   })
+                  //   for (let key in obj) {
+                  //       // obj[key] = obj[key].split('\n')[0]
+                  //       //lyricArr.push(obj[key])
+                  //     if (obj[key] == null){
+                  //       lyricArr.push('\n')
+                  //       }else{
+                  //         lyricArr.push(obj[key])
+                  //       }
+                  //   }
+                  //   // cb && cb(obj, lyricArr)
+                  //   resolve(lyricArr)
                 },
                 fail: function (err) {
                     reject(err)

@@ -9,6 +9,7 @@ page{
 }
 .container-content{
   position: absolute;
+  font-size: 38rpx;
   left: 0;
   top: 0;
   right: 0;

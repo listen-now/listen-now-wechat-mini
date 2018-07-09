@@ -6,6 +6,7 @@ var that = this
 var timer; // 计时器
 Page({
   data: {
+    margin:320,
     id: null,
     name: null,
     src: null,
@@ -170,7 +171,7 @@ Page({
           that.setData({
             lyricArr: lyricArr
           })
-         // console.log(lyricArr)
+          console.log(lyricArr)
         }
         return Common.getMusicData()
       }).catch(e => {
@@ -403,6 +404,16 @@ function Countdown(that) {
             progress: parseInt(progress)
             
           })
+
+        //控制歌词滚动
+          var lists = that.data.lyricArr;
+          if (lists[res.currentPosition])
+          {
+               that.setData({
+                 margin:that.data.margin-25
+               })
+          }
+
         }else{
           let progress = (100 / res.duration * res.currentPosition)
           //转化成时间

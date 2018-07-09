@@ -46,6 +46,7 @@ Page({
         
         that.setData({
           index:index,
+          
           [name] : song.name,
           [author] :song.author,
           [duration] :song.duration,

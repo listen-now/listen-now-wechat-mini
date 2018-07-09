@@ -10,10 +10,10 @@
     </view>
 
     <!--歌词-->
-    <view class="lyric-content" hidden="{{islyric}}" style="flex:1;margin:30px 0;overflow-y: scroll;" bindtap="showCircle">
+    <view class="lyric-content" hidden="{{islyric}}" style="flex:1;margin-top:{{margin}}rpx;overflow-y: scroll;" bindtap="showCircle">
       <view class="lyric" style="overflow-y: scroll;">
         <block wx:for="{{lyricArr}}" wx:key="key">
-          <view> {{item}} </view>
+          <view style=''> {{item}} </view>
         </block>
       </view>
     </view>

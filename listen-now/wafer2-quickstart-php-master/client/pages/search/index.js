@@ -38,7 +38,7 @@ Page({
     search() {
       let that = this
       if (!that.data) return
-      console.log(that.data)
+      //console.log(that.data)
       this.setData({
         searchStatus: 0,
         inputVal: that.data.inputVal
@@ -58,7 +58,7 @@ Page({
           action: "default"
         },
         success: res => {
-          console.log(res)
+          //console.log(res)
           wx.hideLoading()//停止加载中提示
           let temp = []
           if (!res.data.songs) {

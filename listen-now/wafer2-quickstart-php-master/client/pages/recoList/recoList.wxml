@@ -1,0 +1,3 @@
+<view wx:for="{{songlist}}">
+{{item.name}}
+</view>

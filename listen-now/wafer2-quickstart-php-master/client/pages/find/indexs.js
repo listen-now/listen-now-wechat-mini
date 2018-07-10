@@ -19,7 +19,27 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    var that=this
+    wx.request({
+      url: "http://zlclclc.cn/Random_song_list",
+      method: 'GET',
+      // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {}, // 设置请求的 header
+      success: function (res) {
+        console.log("post成功，获得数据");
+        console.log(res);
+        that.setData({
+          res: res.data
+        })
+         console.log(that.data.res)
+      },
+      fail: function (err) {
+        reject(err)
+      },
+      complete: function (res) {
+        // complete
+      }
+    })
   },
 
   /**
@@ -28,7 +48,33 @@ Page({
   onReady: function () {
 
   },
+  changelist(e){
+   console.log(e);
+   var id=e.currentTarget.dataset.id;
 
+   var that=this;
+   wx.request({
+     url: "http://zlclclc.cn/Random_song_list",
+     method: 'GET',
+     // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+     // header: {}, // 设置请求的 header
+     success: function (res) {
+       //console.log("post成功，获得数据");
+       //console.log(res);
+       that.setData({
+         res: res.data
+       })
+       console.log(that.data.res)
+     },
+     fail: function (err) {
+       reject(err)
+     },
+     complete: function (res) {
+       // complete
+     }
+   })
+   
+  },
   /**
    * 生命周期函数--监听页面显示
    */
@@ -85,6 +131,18 @@ Page({
   /**
    * 分栏点击
    */
+  intolist(e){
+    //console.log(e)
+    var that = this
+    var listid = e.currentTarget.dataset.listid;
+    console.log(listid);
+     wx.navigateTo({
+       url: '/pages/recoList/recoList',
+     })
+     wx.setStorageSync('listid', listid)
+   
+  },
+
   inputTyping(e) {
     this.setData({
       inputVal: e.detail.value

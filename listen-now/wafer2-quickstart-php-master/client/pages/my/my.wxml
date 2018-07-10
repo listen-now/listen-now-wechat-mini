@@ -37,7 +37,7 @@
     </view>
     <view class="nav-item">
       <view>
-         <image src="/images/icons/lishi.jpg" style="width:23px;height:23px;"></image>
+         <image src="/images/icons/lishi.jpg" style="width:23px;height:23px;" bindtap='torecent'></image>
       </view>
       <view>历史</view>
     </view>

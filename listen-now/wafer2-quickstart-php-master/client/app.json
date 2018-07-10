@@ -16,7 +16,8 @@
     "pages/comment/comment",
     "pages/test/test",
     "pages/fav_song/fav_song",
-    "pages/recent/recent"
+    "pages/recent/recent",
+    "pages/recoList/recoList"
   ],
   "window": {
     "backgroundTextStyle": "light",

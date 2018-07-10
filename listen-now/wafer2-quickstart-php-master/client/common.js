@@ -58,6 +58,7 @@ const operation = {
                 // header: {}, // 设置请求的 header
                 success: function (res) {
                     // success
+                    console.log(res)
                     var lrc = res.data.data.lyric;
                     var lyrics = lrc.split("\n");
                     var lrcObj = {};

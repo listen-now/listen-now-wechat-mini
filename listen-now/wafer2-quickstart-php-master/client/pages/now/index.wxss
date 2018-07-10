@@ -94,7 +94,12 @@ page{
   background-image:url(https://listen1.52ledao.com/static/images/add.png) ;
   
 }
+.lyric{
+  color: white;
+  font-size: 45rpx;
+}
 .btn{
+ 
     width: 40px;
   height: 40px;
   background-size: cover;

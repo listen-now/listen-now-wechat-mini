@@ -1,1 +1,12 @@
-<view wx:for="{{lists}}">{{item.name}}</view>
+<view wx:for="{{lists}}" wx:key="key" style="background-image: url(yy.jpg)" bindtap='tonow' data-song='{{item.info}}'>
+<view class='container'>
+  <view class='head_img' style=" background-image: url({{item.poster}});">
+  <view class='head_img_hover'>
+    <text class='main_title '>{{item.name}}</text>
+    <text class='sub_title '>{{item.author}}\n {{item.time}}</text>
+  </view>
+  <image class='movie_img' src='{{item.poster}}' data-src='{{item.poster}}' catchtap='previewImage'></image>
+  </view>
+</view>
+ <view class='horizontalline'></view>
+</view>

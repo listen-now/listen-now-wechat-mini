@@ -131,6 +131,8 @@
 
 .menu {
   padding-left: 2%;
+  position: relative;
+  top: -80rpx;
 }
 
 .menu_view {

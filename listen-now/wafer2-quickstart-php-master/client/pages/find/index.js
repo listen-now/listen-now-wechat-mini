@@ -96,6 +96,28 @@ Page({
                 });
             }
         });
+        wx.request({
+          url: "http://zlclclc.cn/Random_song_list",
+          method: 'GET',
+          // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+          // header: {}, // 设置请求的 header
+          success: function (res) {
+            console.log("post成功，获得数据");
+            console.log(res);
+            that.setData({
+              res:res
+            })
+
+          },
+          fail: function (err) {
+            reject(err)
+          },
+          complete: function (res) {
+            // complete
+          }
+        })
+
+
     },
     tabClick: function (e) {
         this.setData({

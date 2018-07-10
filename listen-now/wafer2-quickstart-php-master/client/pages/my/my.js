@@ -13,7 +13,14 @@ Page({
   onLoad: function () {
     
   },
-
+   torecent(){
+     wx.navigateTo({
+       url: '/pages/recent/recent',
+       success: function(res) {},
+       fail: function(res) {},
+       complete: function(res) {},
+     })
+   },
   bindGetUserInfo: function (e) {
     var that = this;
     var userInfo = e.detail.userInfo;

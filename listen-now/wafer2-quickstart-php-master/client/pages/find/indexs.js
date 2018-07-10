@@ -21,7 +21,7 @@ Page({
   onLoad: function (options) {
     var that=this
     wx.request({
-      url: "http://zlclclc.cn/Random_song_list",
+      url: "https://www.zlclclc.cn/Random_song_list",
       method: 'GET',
       // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
       // header: {}, // 设置请求的 header
@@ -49,12 +49,12 @@ Page({
 
   },
   changelist(e){
-   console.log(e);
+   //console.log(e);
    var id=e.currentTarget.dataset.id;
 
    var that=this;
    wx.request({
-     url: "http://zlclclc.cn/Random_song_list",
+     url: "https://www.zlclclc.cn/Random_song_list",
      method: 'GET',
      // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
      // header: {}, // 设置请求的 header
@@ -112,6 +112,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+    
   
   },
 

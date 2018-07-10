@@ -43,43 +43,67 @@ Page({
         searchStatus: 0,
         inputVal: that.data.inputVal
       });
+      console.log(that.data.inputVal)
       wx.showLoading({
         title: '搜索中',
         mask: true
       })
       //查询音乐列表
-      api.post({
-        url: 'song/Search',
+      wx.request({
+        url: 'https://www.zlclclc.cn/search',
         data: {
-          keyword: that.data.inputVal,
+          title: that.data.inputVal,
           platform: "Neteasymusic",
-          page: "1",
-          source: "zlclclc", //zlclclc or leanapp or ledao
-          action: "default"
+          page: 1,
         },
+        method: 'POST',
         success: res => {
           //console.log(res)
+          console.log(res)
           wx.hideLoading()//停止加载中提示
           let temp = []
-          if (!res.data.songs) {
+          if (!res.data) {
             that.setData({
               searchStatus: 2
             })
             return;
           }
-          res.data.songs.forEach((song, index) => {
-            temp.push({
-              id: song.id,
-              name: song.name,
-              mp3Url: song.mp3Url,
-              picUrl: song.picUrl,
-              singer: song.singer
-            })
-            that.setData({
+          var  song =res.data ;
+        
+         
+          
+          for (var key in song) {//遍历键值对
+              if(key<=10)
+              {
+                temp.push({
+                  id: song[key].music_id,
+                  name: song[key].music_name,
+                  mp3Url: song[key].play_url,
+                  picUrl: song[key].image_url,
+                  singer: song[key].artists
+                })
+              }
+              
+           
+          }
+          console.log(temp);
+          that.setData({
               searchStatus: 1,
               searchReault: temp
             })
-          })
+          // res.data.foreach((song, index) => {
+          //   temp.push({
+          //     id: song.music_id,
+          //     name: song.music_name,
+          //     mp3Url: song.play_url,
+          //     picUrl: song.image_url,
+          //     singer: song.artists
+          //   })
+          //   that.setData({
+          //     searchStatus: 1,
+          //     searchReault: temp
+          //   })
+          // })
           // 存入搜索的结果进缓存
           wx.setStorage({
             key: "searchReault",

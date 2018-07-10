@@ -100,7 +100,7 @@ Page({
       title: '加载中',
       mask: true
     })
-    
+
     // wx.request({
     //   url: "zlclclc.cn",
     //   data: {
@@ -126,12 +126,13 @@ Page({
   //界面载入
   onShow: function () {
     let that = this;
+    clearTimeout(timer);
     var id = wx.getStorageSync('clickdata');
     
      var id=id.id
      console.log(id)
      wx.request({
-       url: "http://115.238.228.39/id",
+       url: "https://www.zlclclc.cn/id",
        data: {
          id: id,
          platform: "Neteasymusic",
@@ -249,6 +250,7 @@ Page({
   //音乐播放
   audioPlay: function () {
     let that = this;
+    clearTimeout(timer);
     console.log("音乐播放按钮")
     //背景音乐信息
     wx.getBackgroundAudioPlayerState({
@@ -306,8 +308,6 @@ Page({
 
   //音乐暂停
   audioPause: function () {
-
-
 
     console.log("音乐暂停")
     //console.log(this.data);

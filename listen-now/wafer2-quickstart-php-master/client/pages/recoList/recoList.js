@@ -11,11 +11,12 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
+
   onLoad: function () {
      var that=this
      var listid=wx.getStorageSync('listid')
      wx.request({
-       url: "http://zlclclc.cn/song_list_requests",
+       url: "https://www.zlclclc.cn/song_list_requests",
        method: 'POST',
        data: {
          url: listid,
@@ -75,7 +76,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+        
   },
 
   /**

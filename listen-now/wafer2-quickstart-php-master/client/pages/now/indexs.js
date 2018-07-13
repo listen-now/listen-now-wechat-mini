@@ -6,11 +6,10 @@ var that = this
 var timer; // 计时器
 Page({
   data: {
-    currentPosition:0,
-    currentlrc:'',
-    animation1:{},
-    step:0,
-    margin:40,
+    currentlrc: '',
+    animation1: {},
+    step: 0,
+    margin: 40,
     id: null,
     name: null,
     src: null,
@@ -30,17 +29,16 @@ Page({
     minute: 0,
     second: 0,
     percent: '100%',
-    duration:''
+    duration: ''
   },
 
 
   //收藏
-   recent(e){
+  recent(e) {
     console.log(e)
-    var id=e.currentTarget.dataset.id
+    var id = e.currentTarget.dataset.id
     wx.setStorageSync('recent', this.data)
-    if(id==0)
-    {
+    if (id == 0) {
       wx.navigateTo({
         url: '/pages/recent/recent?id=1',
       })
@@ -48,7 +46,7 @@ Page({
   },
 
   //收藏最喜欢歌曲
-  fav_song(){
+  fav_song() {
     console.log(this.data)
     wx.setStorageSync('fav_song', this.data)
     wx.navigateTo({
@@ -97,9 +95,6 @@ Page({
     })
   },
   onLoad: function () {
-     ////后台页面还在运行时，再进入该页面不会触发onload
-       
-
     wx.showLoading({
       title: '加载中',
       mask: true
@@ -113,11 +108,9 @@ Page({
     //     source: "zlclclc", //zlclclc or leanapp or ledao
     //     action: "lyric"
     //   },
-    
+
     console.log('打开播放界面')
     let that = this;
-
-    
     // 调用应用实例的方法获取全局数据
     // app.getUserInfo(function (userInfo) {
     //   //更新数据
@@ -132,55 +125,41 @@ Page({
   //界面载入
   onShow: function () {
     let that = this;
-    
+    var id = wx.getStorageSync('clickdata');
     var operation = wx.getStorageSync('operation')
     console.log('-----操作是' + operation);
-    if(operation=='recoList')
-    {
+    if (operation == 'recoList') {
       clearTimeout(timer);
     }
-   
 
-    //
-    var cur = wx.getStorageInfoSync('currentPosition')
-    if (cur == 0) {
-      clearTimeout(timer);
-    }
-    
-    var id = wx.getStorageSync('clickdata');
-    var nowlists = wx.getStorageSync('nowLists')
-    that.setData({
-      nowlists: nowlists
-    })
-   //console.log(lists)
-    
-     var id=id.id
-     console.log(id)
-     wx.request({
-       url: "https://www.zlclclc.cn/id",
-       data: {
-         id: id,
-         platform: "Neteasymusic",
-      
-       },
-       method: 'POST', 
-       // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-       // header: {}, // 设置请求的 header
-       success: function (res) {
-         console.log("post成功，获得数据");
+
+    var id = id.id
+    console.log(id)
+    wx.request({
+      url: "http://115.238.228.39/id",
+      data: {
+        id: id,
+        platform: "Neteasymusic",
+
+      },
+      method: 'POST',
+      // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {}, // 设置请求的 header
+      success: function (res) {
+        console.log("post成功，获得数据");
         console.log(res)
-           that.setData({
-             poster:res.data[0].image_url,
-           })
+        that.setData({
+          poster: res.data[0].image_url,
+        })
 
-       },
-       fail: function (err) {
-         reject(err)
-       },
-       complete: function (res) {
-         // complete
-       }
-     })
+      },
+      fail: function (err) {
+        reject(err)
+      },
+      complete: function (res) {
+        // complete
+      }
+    })
     console.log('初始化')
     Common.asyncGetStorage('clickdata')//本地缓存
       .then(data => {
@@ -192,8 +171,7 @@ Page({
           name: data.name,
           src: data.mp3Url,
           poster: data.picUrl,
-          author: data.singer,
-          
+          author: data.singer
         })
         console.log('准备播放音乐')
 
@@ -276,7 +254,6 @@ Page({
   //音乐播放
   audioPlay: function () {
     let that = this;
-    clearTimeout(timer);
     console.log("音乐播放按钮")
     //背景音乐信息
     wx.getBackgroundAudioPlayerState({
@@ -285,14 +262,13 @@ Page({
         // var dataUrl = res.dataUrl
         var value = wx.getStorageSync('noww')
         //console.log(value)
-        if(value)
-        {
+        if (value) {
           var currentPosition = value
-        }else{
-          currentPosition=0
+        } else {
+          currentPosition = 0
         }
-        
-       //console.log(currentPosition)
+
+        //console.log(currentPosition)
         // var duration = res.duration
         // var downloadPercent = res.downloadPercent
         wx.getStorage({
@@ -335,16 +311,18 @@ Page({
   //音乐暂停
   audioPause: function () {
 
+
+
     console.log("音乐暂停")
     //console.log(this.data);
     wx.pauseBackgroundAudio();
-      
+
     // wx.getBackgroundAudioPlayerState({
     //   success: function (res) {
     //     console.log(res);
     //   }
     // })
-   // console.log(this.data);
+    // console.log(this.data);
     console.log("暂停跟踪进度");
     clearTimeout(timer);
     this.setData({
@@ -362,7 +340,7 @@ Page({
 
   //滑动进度
   slider3change: function (e) {
-   // console.log(e);
+    // console.log(e);
     console.log("滑动进度条")
     sliderToseek(e, function (dataUrl, cal) {
       // wx.playBackgroundAudio({
@@ -374,65 +352,10 @@ Page({
     })
   },
   //上一曲
-  prev(){
-    var that=this
-      var nowId=that.data.id
-      var nowlists=that.data.nowlists
-      console.log(nowlists)
-      var preId
-      for(var key in nowlists){
-          if(nowlists[key]==nowId)
-          {
-            preId=nowlists[key-1]
-            break;
-
-          }
-      }
-      wx.request({
-        url: "https://www.zlclclc.cn/id",
-        method: 'POST',
-        // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-        // header: {}, // 设置请求的 header
-        data: {
-          id: preId,
-          platform: "Neteasymusic",
-
-        },
-        success: function (res) {
-          //console.log("post成功，获得数据")
-          //console.log(res)
-          var songData = {
-            id: res.data[0].music_id,
-            name: res.data[0].music_name,
-            mp3Url: res.data[0].play_url,
-            picUrl: res.data[0].image_url,
-            singer: res.data[0].artists,
-          }
-          console.log(songData);
-          // return;
-          
-          app.globalData.issearchlaying = true// 设置搜索结果播放状态
-          // 将当前点击的歌曲保存在缓存中
-          wx.setStorageSync('clickdata', songData)
-          that.onShow();
-          // that.setData({
-          //   id: songData.id,
-          //   name: songData.name,
-          //   src: songData.mp3Url,
-          //   poster: songData.picUrl,
-          //   author: songData.singer,
-
-          // })
-          // wx.redirectTo({
-          //   url: '/pages/now/index',
-          // })
-         
-  }
-  })},
-  // prev: function () {
-  //   console.log("上一曲")
-  //   prevSong(this)
-  // },
+  prev: function () {
+    console.log("上一曲")
+    prevSong(this)
+  },
   //提示框
   ohShitfadeOut(title) {
     var fadeOutTimeout = setTimeout(() => {
@@ -442,10 +365,7 @@ Page({
   },
 })
 
-
-
-
-//上一曲
+// 上一曲
 // function prevSong(that) {
 //   let id = that.data.id
 //   console.log('id', id)
@@ -475,50 +395,48 @@ function sliderToseek(e, cb) {
   var that = this
   wx.getBackgroundAudioPlayerState({
     success: function (res) {
-     // console.log(res);  
+      // console.log(res);  
       console.log("有音乐播放时：滑动调整播放音乐进度")
       var dataUrl = res.dataUrl
-       var duration = res.duration
-        
-       // console.log(duration)
+      var duration = res.duration
+
+      // console.log(duration)
       let val = e.detail.value
       //console.log(val)
-      let cal = parseInt(val * duration/ 100)
-     
+      let cal = parseInt(val * duration / 100)
       //console.log(cal)
-    wx.seekBackgroundAudio({
+      wx.seekBackgroundAudio({
         position: cal
       })
-    wx.setStorageSync('noww', cal)
+      wx.setStorageSync('noww', cal)
       // let progress = (100 / res.duration * res.currentPosition)
 
       // that.setData({
-        
+
       //   progress: parseInt(progress)
 
       // })
-      
+
     },
     fail: function (res) {
       console.log("无音乐播放时：滑动调整播放音乐进度")
-      
+
       wx.getStorage({
         key: 'clickdata',
         success: function (res) {
           Common.playMusic(res.data.mp3Url, res.data.name, res.data.picUrl)
           let cal = parseInt(val * duration / 100)
-           cal = cal.toFixed(0)
           console.log("  └─已切换暂停按钮")
         }
       })
     }
   })
-  
+
 }
 
-// 我的音乐播放控制器
+/// 我的音乐播放控制器
 function myPlayMusic(mp3Url, name, picUrl, that) {
-  
+
   console.log("开始跟踪进度");
   Countdown(that);
   return Common.playMusic(mp3Url, name, picUrl)
@@ -528,15 +446,15 @@ function Countdown(that) {
   timer = setTimeout(function () {
     wx.getBackgroundAudioPlayerState({
       success: function (res) {
-      
-           
-        res.currentPosition = res.currentPosition*1;
-       
-        if (res.status == 1){
+
+
+        res.currentPosition = res.currentPosition * 1;
+
+        if (res.status == 1) {
           let progress = (100 / res.duration * res.currentPosition)
           //转化成时间
           var minute = parseInt(res.currentPosition / 60);
-           minute = minute*1;
+          minute = minute * 1;
           var second = res.currentPosition % 60;
           console.log("进度条更新")
           that.setData({
@@ -549,26 +467,22 @@ function Countdown(that) {
 
           //控制歌词滚动
           var lists = that.data.lyricArr;
-          
-            //平移动画实现
+
+          //平移动画实现
           var jiange = res.currentPosition - that.data.currentPosition //间隔
           //console.log(jiange)
-          var count=0;
+          var count = 0;
           //console.log(count)
-          if(jiange<0)
-          {
-            var flag=0
+          if (jiange < 0) {
+            var flag = 0
 
-            for (var key in lists)
-            {
-              if (key< that.data.currentPosition && key > res.currentPosition)
-              {
-                if (lists[key]&&flag==0)
-                {
+            for (var key in lists) {
+              if (key < that.data.currentPosition && key > res.currentPosition) {
+                if (lists[key] && flag == 0) {
                   that.setData({
                     currentlrc: lists[key]
                   })
-                  flag=1;
+                  flag = 1;
                 }
                 count--;
               }
@@ -576,9 +490,9 @@ function Countdown(that) {
             that.setData({
               currentPosition: res.currentPosition
             })
-          }else if(jiange>1){
+          } else if (jiange > 1) {
             for (var key in lists) {
-                   
+
               if (key > that.data.currentPosition && key < res.currentPosition) {
                 if (lists[key] && flag == 0) {
                   that.setData({
@@ -589,23 +503,21 @@ function Countdown(that) {
                 count++;
               }
             }
-            if (res.currentPosition!=NaN)
-            {
+            if (res.currentPosition != NaN) {
               that.setData({
                 currentPosition: res.currentPosition,
               })
               wx.setStorageSync('currentPosition', res.currentPosition)
             }
           }
-              
-          if (count > 1||count < 0) {
-            if(count>1)
-            {
-              var step = that.data.step - (count-1) * 29
-            }else{
+
+          if (count > 1 || count < 0) {
+            if (count > 1) {
+              var step = that.data.step - (count - 1) * 29
+            } else {
               var step = that.data.step - (count + 1) * 29
             }
-         
+
             console.log(step)
             var animation = wx.createAnimation({
               duration: 1000,
@@ -615,31 +527,30 @@ function Countdown(that) {
             that.setData({
               animation1: animation.export(),
               step: step,
-             
+
             })
           }
 
           var currentPosition = res.currentPosition.toFixed(0)
 
           //console.log(count)
-          if (lists[res.currentPosition])
-          {
-            var step=that.data.step-29
+          if (lists[res.currentPosition]) {
+            var step = that.data.step - 29
             var animation = wx.createAnimation({
               duration: 1000,
               timingFunction: 'ease',
             })
-            animation=animation.translateY(step).step({ duration: 1000 })
+            animation = animation.translateY(step).step({ duration: 1000 })
             that.setData({
               animation1: animation.export(),
-              step:step,
+              step: step,
               currentlrc: lists[res.currentPosition]
             })
             //console.log(that.data.currentlrc)
 
-            if (res.currentPosition==0){
+            if (res.currentPosition == 0) {
               that.setData({
-                animation1:{},
+                animation1: {},
                 step: 0,
                 currentlrc: ""
               })
@@ -655,26 +566,26 @@ function Countdown(that) {
             //     break;
             //   }
             // }
-         
-          }
-            // that.setData({
-            //   margin: that.data.margin - that.data.step,
-            // })
-           
 
-        }else{
+          }
+          // that.setData({
+          //   margin: that.data.margin - that.data.step,
+          // })
+
+
+        } else {
           let progress = (100 / res.duration * res.currentPosition)
           //转化成时间
           var minute = parseInt(res.currentPosition / 60);//
-           minute = minute*1;
+          minute = minute * 1;
 
-          var second = res.currentPosition%60;
-     
+          var second = res.currentPosition % 60;
+
           that.setData({
             //progress: parseInt(progress),
             progress: progress.toFixed(0),
-            minute:minute,
-            second:second,
+            minute: minute,
+            second: second,
             isplaying: false
           })
         }
@@ -683,5 +594,3 @@ function Countdown(that) {
     Countdown(that)
   }, 1000);
 };
-
-// ----------------------------------------------------

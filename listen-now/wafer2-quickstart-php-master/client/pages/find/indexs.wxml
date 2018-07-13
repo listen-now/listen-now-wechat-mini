@@ -19,7 +19,8 @@
   </view>
   <view class="search-cell">
     <view class="weui-cell__bd">
-      <input class="input-search" placeholder="" value="{{inputVal}}"  bindtap='search1'/>
+    
+      <input class="input-search" placeholder="" value="{{inputVal}}"  bindtap='search1' auto-focus type="text"/>
     </view>
     <view class="weui-cell__ft">
       <button class="btn-search" type="primary" bindtap='search1'>搜索</button>
@@ -41,25 +42,25 @@
     <!--选项一-->
     <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
       <view class="menu">
-        <view class="menu_view" wx:for="{{res}}" data-id="{{index}}" data-listId="{{item.song_list_url}}" bindtap='intolist' wx:key="key">
+        <view class="menu_view" wx:for="{{res}}" wx:if="{{index<6}}" data-id="{{index}}" data-listId="{{item.song_list_url}}" bindtap='intolist' wx:key="key">
           <image src="{{item.image_url}}" mode="widthFix" class="menu3icon"></image>
-          <text>{{item.title}}</text>
+          <text class="font">{{item.title}}</text>
         </view>
       </view>
     </view>
     <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
         <view class="menu">
-        <view class="menu_view" wx:for="{{res}}" wx:key="key">
+        <view class="menu_view" wx:for="{{res}}" wx:if="{{index<6}}" wx:key="key">
           <image src="{{item.image_url}}" mode="widthFix" class="menu3icon"></image>
-          <text>{{item.title}}</text>
+          <text class="font">{{item.title}}</text>
         </view>
       </view>
     </view>
     <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
      <view class="menu">
-        <view class="menu_view" wx:for="{{res}}" wx:key="key">
+        <view class="menu_view" wx:for="{{res}}" wx:if="{{index<6}}" wx:key="key">
           <image src="{{item.image_url}}" mode="widthFix" class="menu3icon"></image>
-          <text>{{item.title}}</text>
+          <text class="font">{{item.title}}</text>
         </view>
       </view>
     </view>

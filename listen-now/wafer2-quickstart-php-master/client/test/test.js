@@ -15,7 +15,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function () {
 
   },
 
@@ -69,27 +69,6 @@ Page({
   },
 
   formSubmit: function (e) {
-    // util.showBusy('请求中...')
-    // var that = this
-    // wx.request({
-    //   url: `${config.service.host}/weapp/demo`,
-    //   login: true,
-    //   data: {
-    //     update: 'insertMsg'
-    //   },
-    //   success(result) {
-    //     console.log(result)
-    //     util.showSuccess('请求成功完成')
-    //     //that.setData({
-    //     //  requestResult: JSON.stringify(result.data)
-    //     //})
-    //   },
-    //   fail(error) {
-    //     util.showModel('请求失败', error);
-    //     console.log('request fail', error);
-    //   }
-    // })
-    // return ;
 
     var that = this
     var name = e.detail.value.name

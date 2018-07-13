@@ -156,3 +156,8 @@
   font-size: 22rpx;
   line-height: 28rpx;
 }
+.font{
+   height: 60rpx;
+   text-align: center;
+   color: 999
+}

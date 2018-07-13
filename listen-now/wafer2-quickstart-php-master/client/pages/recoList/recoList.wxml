@@ -1,3 +1,25 @@
-<view wx:for="{{songlist}}">
-{{item.name}}
+<view class='container'>
+  <image class='head_img' src='{{creator.backgroundUrl}}' />
+  <view class="header_background"></view>
+  <view class='head_img_hover'>
+    <view class="user">
+      <image class="user-pic" src='{{creator.avatarUrl}}'/>
+      <text class='main_title '>{{creator.nickname}}</text>
+    </view>
+    <text class='sub_title '>{{creator.signature}}</text>
+  </view>
+  <image class='movie_img' src='{{creator.backgroundUrl}}'></image>
+  </view>
+
+<view class="link">全部播放（共{{song_num}}首）</view>
+
+<view class='horizontalline'></view>
+
+<view wx:for="{{songlist}}" wx:key="key" >
+    <view class="lists"  bindtap='tonow' data-id="{{item.id}}">
+      <text class="main-name">{{item.name}}\n</text>
+      <image class="add" src="/images/fm.png"></image>
+      <text class="sub-name">{{item.ar[0].name}} - <text class="alname">{{item.al.name}}</text></text>
+    </view>
+  
 </view>

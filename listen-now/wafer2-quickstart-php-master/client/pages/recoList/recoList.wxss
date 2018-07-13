@@ -1,1 +1,111 @@
-/* pages/recoList/recoList.wxss */
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.head_img {
+  width: 100%;
+  height: 350rpx;
+}
+
+.header_background{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 350rpx;
+  background-color: #000;
+  opacity: 0.4;
+}
+
+.head_img_hover {
+  width: 70%;
+  height: 350rpx;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.user{
+  margin-top: 55rpx;
+  margin-left: 40rpx;
+}
+
+.user-pic{
+  height: 55rpx;
+  width: 50rpx;
+  border: 1px solid gainsboro;
+  border-radius: 50%;
+}
+
+.main_title {
+  font-size: 19px;
+  color: #fff;
+  margin-left: 10rpx;
+  margin-bottom: 10rpx;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.sub_title {
+  font-size: 28rpx;
+  color: #fff;
+  margin-top: 30rpx;
+  margin-left: 40rpx;
+}
+
+.movie_img {
+  height: 235rpx;
+  width: 175rpx;
+  position: absolute;
+  top: 188rpx;
+  right: 30rpx;
+  border: 1px solid gainsboro;
+  border-radius: 10rpx;
+}
+
+.link{
+  margin-top: 17rpx;
+  margin-left: 20rpx;
+}
+
+.horizontalline {
+  height: 1px;
+  width: 100%;
+  background-color: #d9d9d9;
+}
+
+.lists{
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.main-name {
+  font-size: 19px;
+  color: #666;
+  position: relative;
+  top: 10rpx;
+  left: 40rpx;
+  font-weight:  bold;
+  letter-spacing: 2px;
+}
+
+.sub-name {
+  color: #666;
+  font-size: 28rpx;
+  position: relative;
+  top: -5rpx;
+  left: -20rpx;
+}
+
+.add{
+  width: 50rpx;
+  height: 50rpx;
+  position: relative;
+  top: -25rpx;
+  left: 630rpx;
+}
+.alname{
+  color: #999
+}

@@ -30,10 +30,16 @@ Page({
       }
       app.globalData.issearchlaying = true// 设置搜索结果播放状态
       // 将当前点击的歌曲保存在缓存中
+      wx.removeStorageSync('clickdata')
+      wx.removeStorageSync('operation')
       wx.setStorageSync('clickdata', songData)
-      wx.switchTab({
-        url: '../now/index'
-      })
+      wx.setStorageSync('operation', search)
+  
+        wx.navigateTo({
+          url: '../now/index'
+        })
+     
+      
     },
     search() {
       let that = this

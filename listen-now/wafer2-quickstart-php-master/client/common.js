@@ -45,9 +45,9 @@ const operation = {
     getlyric: function (id) {
         return new Promise((resolve, reject) => {
           console.log("  └─开始下载歌词")
-          let url = 'https://listen1.52ledao.com/api/song/Search'
+          //let url = 'https://www.zlclclc.cn/search'
             wx.request({
-                url: url,
+              url: "https://www.zlclclc.cn/id",
                 data: {
                     id: id,
                     platform: "Neteasymusic",
@@ -58,8 +58,16 @@ const operation = {
                 // header: {}, // 设置请求的 header
                 success: function (res) {
                     // success
-                    console.log(res)
-                    var lrc = res.data.data.lyric;
+                    //console.log(res)
+                    var lrc = res.data[0].lyric;
+                    if (lrc == undefined) {
+
+
+                      //console.log(lyricArr)
+                      resolve({ 0: '无歌词' })
+                      return;
+                    }
+                   //console.log('歌词是'+lrc);
                     var lyrics = lrc.split("\n");
                     var lrcObj = {};
                     for (var i = 0; i < lyrics.length; i++) {
@@ -75,9 +83,11 @@ const operation = {
                         var time = min * 60 + sec;
                         lrcObj[time] = clause;
                       }
+                     
                     }
 
                     var lyricArr=lrcObj
+                    //console.log(lyricArr)
                     resolve(lyricArr)
                    
                   

@@ -22,17 +22,19 @@ Page({
       method: 'POST',
       data: {
         url: listid,
+        platform:"Neteasymusic",
 
       },
       // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
       // header: {}, // 设置请求的 header
       success: function (res) {
-        //console.log("post成功，获得数据");
+        console.log("post成功，获得数据");
         //
         
-       // console.log(res);
+        //console.log(res);
+       
         var s = res.data.Songlist_detail
-        //console.log(s)
+        console.log(s)
         var list=[]
         for(var key in s)
         {
@@ -175,11 +177,11 @@ Page({
         //console.log("post成功，获得数据")
          //console.log(res)
          var songData = {
-           id: res.data[0].music_id,
-           name: res.data[0].music_name,
-           mp3Url: res.data[0].play_url,
-           picUrl: res.data[0].image_url,
-           singer: res.data[0].artists,
+           id: res.data.song.list.music_id,
+           name: res.data.song.list.music_name,
+           mp3Url: res.data.song.list.play_url,
+           picUrl: res.data.song.list.image_url,
+           singer: res.data.song.list.artists,
          }
          console.log(songData);
          // return;

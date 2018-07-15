@@ -51,15 +51,18 @@ const operation = {
                 data: {
                     id: id,
                     platform: "Neteasymusic",
-                    source: "zlclclc", //zlclclc or leanapp or ledao
-                    action: "lyric"
+                    //source: "zlclclc", //zlclclc or leanapp or ledao
+                    //action: "lyric"
                 },
                 method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
                 // header: {}, // 设置请求的 header
                 success: function (res) {
                     // success
-                    //console.log(res)
-                    var lrc = res.data[0].lyric;
+                   // console.log(res)
+                    //return;
+                   
+                    var lrc = res.data.song.list.lyric;
+                    
                     if (lrc == undefined) {
 
 
@@ -88,6 +91,7 @@ const operation = {
 
                     var lyricArr=lrcObj
                     //console.log(lyricArr)
+                  
                     resolve(lyricArr)
                    
                   

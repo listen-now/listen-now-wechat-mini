@@ -112,6 +112,18 @@
   align-items: center;
 }
 
+.bor{
+  margin-top: 15rpx;
+  margin-bottom: 15rpx;
+}
+
+.horizontalline {
+  height: 1px;
+  width: 95%;
+  margin-left: 2.5%;
+  background-color: #d9d9d9;
+}
+
 .tab {
   margin-top: 50rpx;
   height: 96rpx;

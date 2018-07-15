@@ -19,14 +19,38 @@
   </view>
   <view class="search-cell">
     <view class="weui-cell__bd">
-    
-      <input class="input-search" placeholder="" value="{{inputVal}}"  bindtap='search1' auto-focus type="text"/>
+
+<input type="text" class="input-search" placeholder="" value="{{ inputVal }}" bindinput="inputTyping" auto-focus/>
+
     </view>
     <view class="weui-cell__ft">
-      <button class="btn-search" type="primary" bindtap='search1'>搜索</button>
+      <button class="btn-search" type="primary" bindtap='inputTyping'>搜索</button>
     </view>
   </view>
-  <view class="tab weui-tab">
+
+
+
+
+ <view style='text-align:center;margin-top:10px;' wx:if="{{ !!inputVal && searchStatus == 2 }}">没有找到与"{{inputVal}}"相关的歌曲</view>
+<view wx:if="{{inputVal.length > 0 && searchStatus == 1}}">
+    <block wx:for="{{searchReault}}" wx:key="item" style="overflow-y: scroll;">
+ 
+      <navigator url="../now/index" class="bor" data-id="{{item.id}}" data-name="{{item.name}}" data-songUrl="{{item.mp3Url}}" data-picUrl="{{item.picUrl}}" data-singer="{{item.singer}}" open-type="switchTab" bindtap="tonow">
+        <view class="weui-cell__bd">
+          <view class="song-name">{{item.name}}
+            <text class="song-singer">{{item.singer}}</text>
+          </view>
+        </view>
+     </navigator>
+      <view class='horizontalline'></view>
+    </block>
+</view>
+
+
+
+
+  
+  <view class="tab weui-tab" hidden="{{inputVal.length != 0}}">
     <view class="weui-navbar">
       <block wx:for="{{tabs}}" wx:key="*this">
         <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
@@ -38,7 +62,7 @@
       </view>
     </view>
   </view>
-  <view class="weui-tab__panel">
+  <view class="weui-tab__panel" hidden="{{inputVal.length != 0}}">
     <!--选项一-->
     <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
       <view class="menu">

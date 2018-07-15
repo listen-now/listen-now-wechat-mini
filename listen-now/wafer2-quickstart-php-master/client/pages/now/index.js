@@ -6,6 +6,7 @@ var that = this
 var timer; // 计时器
 Page({
   data: {
+    count:1,
     xunhuang:'列表循环',//默认列表循环
     currentPosition:0,
     currentlrc:'',
@@ -33,8 +34,36 @@ Page({
     percent: '100%',
     duration:''
   },
+  //循环模式
+  changecircle(e){
+    var that=this
+    var count=that.data.count
+    if(e!=undefined&&count!=3)
+    {
+      count++; 
+    }else{
+      count=1;
+    }
+    that.setData({
+      count:count,
+    })
+    console.log(count)
+     if(count==1)
+     {
+       wx.showToast({
+         title: '列表循环',
+       })
+     }else if(count==2){
+       wx.showToast({
+         title: '随机播放',
+       })
+     }else{
+       wx.showToast({
+         title: '单曲循环',
+       })
+     }
 
-
+  },
   //收藏
    recent(e){
     console.log(e)
@@ -174,7 +203,7 @@ Page({
          console.log("post成功，获得数据");
         console.log(res)
            that.setData({
-             poster:res.data[0].image_url,
+             poster: res.data.song.list.image_url,
            })
 
        },
@@ -188,7 +217,7 @@ Page({
     console.log('初始化')
     Common.asyncGetStorage('clickdata')//本地缓存
       .then(data => {
-        console.log(data)
+        //onsole.log(data)
         if (!data) return;
         console.log("  ├─数据读取成功:", data.name)
         that.setData({
@@ -415,11 +444,11 @@ Page({
             //console.log("post成功，获得数据")
             //console.log(res)
             var songData = {
-              id: res.data[0].music_id,
-              name: res.data[0].music_name,
-              mp3Url: res.data[0].play_url,
-              picUrl: res.data[0].image_url,
-              singer: res.data[0].artists,
+              id: res.data.song.list.music_id,
+              name: res.data.song.list.music_name,
+              mp3Url: res.data.song.list.play_url,
+              picUrl: res.data.song.list.image_url,
+              singer: res.data.song.list.artists,
             }
             //console.log(songData);
             // return;
@@ -495,11 +524,11 @@ Page({
         //console.log("post成功，获得数据")
         //console.log(res)
         var songData = {
-          id: res.data[0].music_id,
-          name: res.data[0].music_name,
-          mp3Url: res.data[0].play_url,
-          picUrl: res.data[0].image_url,
-          singer: res.data[0].artists,
+          id: res.data.song.list.music_id,
+          name: res.data.song.list.music_name,
+          mp3Url: res.data.song.list.play_url,
+          picUrl: res.data.song.list.image_url,
+          singer: res.data.song.list.artists,
         }
         //console.log(songData);
         // return;

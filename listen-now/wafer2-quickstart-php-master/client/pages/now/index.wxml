@@ -15,7 +15,7 @@
     <view class="lyric-content" hidden="{{islyric}}" style="flex:1;margin-top:30rpx;overflow-y: scroll;"bindtap="showCircle" >
       <view class="lyric" style="overflow-y: scroll;margin-top:350rpx;" animation="{{animation1}}">
         <block wx:for="{{lyricArr}}" wx:key="key">
-          <view wx:if="{{item==currentlrc && index - currentPosition<jiangee }}" style="color:cornflowerblue"> {{item}} </view>
+          <view wx:if="{{item==currentlrc && index - currentPosition <jiangee}}" style="color:cornflowerblue"> {{item}} </view>
           <view wx:else style="color:white"> {{item}} </view>
         </block>
       </view>
@@ -24,7 +24,10 @@
     <!--选择操作-->
     <view class="other-content">
       <view class="icon-choose">
-        <view class="download icon"></view>
+     
+        <view class="download icon" wx:if='{{count==1}}'  bindtap='changecircle'></view>
+        <view class="download icon" wx:elif='{{count==2}}'  bindtap='changecircle'></view>
+        <view class="download icon" wx:elif='{{count==3}}'  bindtap='changecircle'></view>
         <view class="like icon" bindtap='fav_song'></view>
         <view class="add icon" bindtap="addsong"></view>
       </view>

@@ -49,14 +49,7 @@ Page({
         var timee = util.formatTime(new Date());
       //console.log(time);
         var index = that.data.index
-        var name = "lists[" + index + "].name"
-        var author = "lists[" + index + "].author"
-        var duration = "lists[" + index + "].duration"
-        var poster = "lists[" + index + "].poster"
-        var musicId = "lists[" + index + "].musicId"
-        var time = "lists[" + index + "].time"
-        var info = "lists[" + index + "].info"
-        var index = this.data.index + 1;
+      
        
 
       that.setData({

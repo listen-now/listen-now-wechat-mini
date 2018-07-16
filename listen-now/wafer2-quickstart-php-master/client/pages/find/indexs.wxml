@@ -10,7 +10,9 @@
       </view>
     </view>
     <view class='avatar'>
-      <image src="{{avatarIcon}}" mode="aspectFitll"></image>
+     <button class="mini-btn" type="default" size="mini" wx:if="{{!logged}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">登录</button>
+ 
+      <image src="{{logged ? userInfo.avatarUrl : './user-unlogin.png'}}" mode="aspectFitll"></image>
     </view>
   </view>
   <view class='line'></view>
@@ -74,7 +76,7 @@
     </view>
     <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
         <view class="menu">
-        <view class="menu_view" wx:for="{{res}}" wx:if="{{index<6}}" wx:key="key">
+        <view class="menu_view" wx:for="{{res}}" wx:if="{{index<6}}" data-id="{{index}}" data-listId="{{item.song_list_url}}" bindtap='intolist' wx:key="key">
           <image src="{{item.image_url}}" mode="widthFix" class="menu3icon"></image>
           <text class="font">{{item.title}}</text>
         </view>
@@ -82,9 +84,11 @@
     </view>
     <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
      <view class="menu">
-        <view class="menu_view" wx:for="{{res}}" wx:if="{{index<6}}" wx:key="key">
-          <image src="{{item.image_url}}" mode="widthFix" class="menu3icon"></image>
-          <text class="font">{{item.title}}</text>
+        <view class="menu_view"  wx:key="key">
+          <image src="/images/fm.png" mode="widthFix" class="menu3icon" bindtap='intoFav'></image>
+          <text class="font">我喜欢的</text>
+          <image src="/images/fm.png" mode="widthFix" class="menu3icon" bindtap='intoRecent'></image>
+          <text class="font">最近</text>
         </view>
       </view>
     </view>

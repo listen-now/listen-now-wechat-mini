@@ -1,4 +1,8 @@
 // pages/find/indexs.js
+
+var qcloud = require('../../vendor/wafer2-client-sdk/index')
+var config = require('../../config')
+var util = require('../../utils/util1.js')
 var api = require('../../utils/api.js');
 var Common = require('../../common')
 var app = getApp()
@@ -13,8 +17,12 @@ Page({
     hitokotoIcon: '/images/icons/hitokoto.png',
     avatarIcon: 'https://listen1.52ledao.com/music/cd.jpg',
     listenNowLogo: '/images/logo.png',
-    tabs: ["网易云音乐", "QQ音乐", "虾米音乐"],
+    tabs: ["热门歌单", "虾米音乐","我的音乐" ],
     activeIndex: 0,
+    userInfo: {},
+    logged: false,
+    takeSession: false,
+    requestResult: '',
 
 
     inputVal: '',
@@ -33,8 +41,8 @@ Page({
       // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
       // header: {}, // 设置请求的 header
       success: function (res) {
-        console.log("post成功，获得数据");
-        //console.log(res);
+        //console.log("post成功，获得数据");
+        console.log(res);
         that.setData({
           res: res.data
         })
@@ -54,6 +62,12 @@ Page({
    */
   onReady: function () {
 
+  },
+
+  intoRecent(){
+    wx.navigateTo({
+      url: '/pages/recent/recent',
+    })
   },
   changelist(e) {
     //console.log(e);
@@ -139,6 +153,12 @@ Page({
   /**
    * 分栏点击
    */
+  intoFav(){
+     wx.navigateTo({
+       url: '/pages/fav_song/fav_song?oper=1',
+     })  
+  },
+
   intolist(e) {
     console.log(e)
     var that = this
@@ -334,6 +354,98 @@ Page({
       }
     })
   },
+
+  //获取用户信息
+  bindGetUserInfo: function (e) {
+    var that = this;
+    var userInfo = e.detail.userInfo;
+    var signature = e.detail.signature
+    // 查看是否授权
+    wx.getSetting({
+      success: function (res) {
+        if (res.authSetting['scope.userInfo']) {
+
+          // 检查登录是否过期
+          wx.checkSession({
+            success: function () {
+              // 登录态未过期
+              util.showSuccess('登录成功');
+              that.setData({
+                userInfo: userInfo,
+                logged: true
+              })
+
+
+              var nickName = userInfo.nickName
+
+              var sex = userInfo.gender
+              var city = userInfo.city
+              var province = userInfo.province
+              var country = userInfo.country
+              var avatarUrl = userInfo.avatarUrl
+
+              wx.login({
+                success: function (res) {
+                  var code = res.code;//发送给服务器的code
+
+                  if (code) {
+                    wx.request({
+                      url: `${config.service.host}/weapp/users`,//服务器的地址，现在微信小程序只支持https请求，所以调试的时候请勾选不校监安全域名
+                      data: {
+                        code: code,
+                        nick: nickName,
+                        avaurl: avatarUrl,
+                        sex: sex,
+                        city: city,
+                        province: province,
+                        country: country,
+                        update: 'getOpenId'
+                      },
+                      header: {
+                        'content-type': 'application/json'
+                      },
+                      success: function (res) {
+                        wx.setStorageSync('name', res.data.name);//将获取信息写入本地缓存
+                        wx.setStorageSync('openid', res.data.openid);
+                        wx.setStorageSync('imgUrl', res.data.imgurl);
+                        wx.setStorageSync('sex', res.data.sex);
+
+                        //console.log(res.data);
+
+                      }
+                    })
+                  }
+                },
+                fail: function (error) {
+                  console.log('login failed ' + error);
+                }
+              })
+              // console.log(e);
+              //return;
+              if (that.data.logged) return;
+
+              util.showBusy('正在登录');
+
+            },
+
+            fail: function () {
+              qcloud.clearSession();
+              // 登录态已过期，需重新登录
+              var options = {
+                encryptedData: e.detail.encryptedData,
+                iv: e.detail.iv,
+                userInfo: userInfo
+              }
+              that.doLogin(options);
+            },
+          });
+        } else {
+          util.showModel('用户未授权', e.detail.errMsg);
+        }
+      }
+    });
+  },
+
   /**
    * 更新hitokoto一句话
    */

@@ -31,7 +31,7 @@ Page({
         console.log("post成功，获得数据");
         //
         
-        //console.log(res);
+        console.log(res);
        
         var s = res.data.Songlist_detail
         console.log(s)

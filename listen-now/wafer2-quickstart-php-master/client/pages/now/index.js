@@ -18,7 +18,7 @@ Page({
     src: null,
     poster: "https://listen1.52ledao.com/music/bg.png",
     author: null,
-    isplaying: false,
+    isplaying: true,
     islyric: false,
     sumduration: 0,
     lyricobj: {},
@@ -411,6 +411,10 @@ Page({
   },
   //上一曲
   prev(){
+    if (this.data.count == 2) {
+      this.random();
+      return;
+    }
     var that=this
       var nowId=that.data.id
       var nowlists=that.data.nowlists
@@ -476,6 +480,11 @@ Page({
 
 //下一曲
   next() {
+    if(this.data.count==2)
+    {
+      this.random();
+      return;
+    }
     var that = this
     var nowId = that.data.id
     var nowlists = that.data.nowlists
@@ -494,21 +503,6 @@ Page({
         break;
       }
     }
-    // for (key in nowlists) {
-    //   if (nowlists[key] == nowId) {
-    //     if (key == nowlists.length - 1 ){
-    //       nextId = nowlists[0]
-    //       break;
-    //     }
-    //     var key=key+1
-    //     console.log('------------' + key);
-    //    nextId = nowlists[key]
-       
-
-    //     break;
-    //   }
-    // }
-    //console.log('lists是' + nowlists.length)
     wx.request({
       url: "https://www.zlclclc.cn/id",
       method: 'POST',
@@ -540,6 +534,63 @@ Page({
         that.onShow();
       }
     })
+  },
+
+ //随机播放函数
+  random(){
+    var that = this
+    var nowId = that.data.id
+    var nowlists = that.data.nowlists
+    //console.log('-----------'+nowlists.length)
+    var nextId
+    //var key
+    var a = Math.floor(Math.random() * nowlists.length + 1); 
+        nextId = nowlists[a-1]
+       
+    wx.request({
+      url: "https://www.zlclclc.cn/id",
+      method: 'POST',
+      // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+      // header: {}, // 设置请求的 header
+      data: {
+        id: nextId,
+        platform: "Neteasymusic",
+
+      },
+      success: function (res) {
+        console.log(res)
+        //console.log("post成功，获得数据")
+        //console.log(res)
+        var songData = {
+          id: res.data.song.list.music_id,
+          name: res.data.song.list.music_name,
+          mp3Url: res.data.song.list.play_url,
+          picUrl: res.data.song.list.image_url,
+          singer: res.data.song.list.artists,
+        }
+        //console.log(songData);
+        // return;
+        app.globalData.issearchlaying = true// 设置搜索结果播放状态
+        // 将当前点击的歌曲保存在缓存中
+        wx.setStorageSync('clickdata', songData)
+        console.log("[[[播放xia一首成功")
+        clearTimeout(timer);
+        that.onShow();
+      }
+    })
+   
+
+  },
+
+  //控制单曲循环
+  onemusic(){
+
+     wx.seekBackgroundAudio({
+       position: 0,
+     })
+      app.globalData.issearchlaying = true// 设置搜索结果播放状态
+      clearTimeout(timer);
+      that.onShow();
   },
 
 
@@ -809,11 +860,17 @@ function Countdown(that) {
             isplaying: false
           })
         }
-
-        if (currentPosition==res.duration)
+      var count =that.data.count  //判断循环模式 ，1 是列表循环 ，2是随机播放，3是单曲循环
+     if (currentPosition == res.duration) {
+        if(count==1)
         {
           that.next();
+        }else if(count == 2){
+          that.random(); 
+        }else{
+          that.onemusic();
         }
+    }
       }
     })
 

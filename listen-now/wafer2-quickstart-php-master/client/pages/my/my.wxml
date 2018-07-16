@@ -5,8 +5,7 @@
          <image
            style="width:70px;height:70px;
             src="{{logged ? userInfo.avatarUrl : './user-unlogin.png'}}"
-            background-size="cover"
-        ></image>    
+            background-size="cover"></image>    
        </view>
        <view class="login">
           <button  class="userinfo-nickname" wx:if="{{!logged}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">点击登录 </button><text class="userinfo-nickname" wx:else>{{userInfo.nickName}}</text>

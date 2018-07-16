@@ -101,6 +101,9 @@
   height: 78rpx;
   padding-left: 20rpx;
 }
+.mini-btn{
+  margin-right: 10rpx;
+}
 
 .search-cell {
   padding-right: 15px;

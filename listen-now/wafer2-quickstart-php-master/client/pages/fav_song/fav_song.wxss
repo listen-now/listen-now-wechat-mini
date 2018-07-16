@@ -1,1 +1,56 @@
-/* pages/fav_song/fav_song.wxss */
+/* pages/recent/recent.wxss */
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.head_img {
+  border: 1px solid;
+  border-radius:10px;
+  margin-left: 10rpx;
+  margin-top: 20rpx;
+  margin-right: 10rpx;
+}
+
+.head_img_hover {
+  width: 65%;
+  height: 320rpx;
+  display: flex;
+  flex-direction: column;
+  float: left;
+}
+
+.main_title {
+  font-size: 19px;
+  color: #fff;
+  font-weight: bold;
+  margin-top: 50rpx;
+  margin-left: 40rpx;
+  letter-spacing: 2px;
+}
+
+.sub_title {
+  font-size: 28rpx;
+  color: #fff;
+  margin-top: 30rpx;
+  margin-left: 40rpx;
+}
+
+.movie_img {
+  height: 238rpx;
+  width: 175rpx;
+  float: right;
+  margin-top: 45rpx;
+  margin-right: 20rpx;
+  border: 2px solid #d9d9d9;
+  border-radius:50%;
+}
+
+.horizontalline {
+  margin-top: 20rpx;
+  margin-bottom: 10rpx;
+  height: 0.25px;
+  width: 100%;
+  background-color: #fff;
+}

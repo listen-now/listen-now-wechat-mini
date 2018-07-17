@@ -99,17 +99,14 @@ page{
 .like{
   background-image:url(https://listen1.52ledao.com/static/images/like.png) ;
 }
-.download{
-  background-image:url(https://listen1.52ledao.com/static/images/download.png) ;
-  
-}
+
 .add{
   background-image:url(https://listen1.52ledao.com/static/images/add.png) ;
   
 }
 .lyric{
   color: white;
-  font-size: 45rpx;
+  font-size: 40rpx;
 }
 .btn{
  

@@ -18,6 +18,13 @@
   transform: scaleY(0.5);
 }
 
+.icon-clear{
+  position: absolute;
+  top:0;
+  left:510rpx;
+  padding:7px 8px;
+}
+
 .hitokoto {
   float: left;
   width: 504rpx;
@@ -101,6 +108,12 @@
   height: 78rpx;
   padding-left: 20rpx;
 }
+
+.inputSearch{
+  margin-top: 15rpx;
+  width: 90%;
+}
+
 .mini-btn{
   margin-right: 10rpx;
 }
@@ -175,4 +188,18 @@
    height: 60rpx;
    text-align: center;
    color: 999
+}
+
+.menu_view1 {
+  padding-top: 2%;
+  padding-right: 1%;
+  text-align: center;
+}
+
+
+
+.recent{
+  position: relative;
+  left: 250rpx;
+  top:-310rpx;
 }

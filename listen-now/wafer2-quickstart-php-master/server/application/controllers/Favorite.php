@@ -16,7 +16,7 @@ class Favorite extends CI_Controller
 
         if ($update == 'get_songs') {
             $openid = $_GET['openid'];
-            $fav_song = $this->db->query("SELECT json_string FROM fav_songs WHERE user_id='$openid'");
+            $fav_song = $this->db->query("SELECT json_string FROM fav_songs WHERE user_id='$openid' ORDER BY id");
             $fav_song = $fav_song->result_array();
             $fav_song = stripslashes($fav_song);
             $fav_songs = json_decode($fav_song);
@@ -124,7 +124,7 @@ class Favorite extends CI_Controller
             $data['oper']=$_GET['oper'];
             $flag=0;
 
-            $id=$this->db->query("SELECT music_id FROM fav_songs WHERE user_id='$openid'");
+            $id=$this->db->query("SELECT music_id FROM fav_songs WHERE user_id='$openid' ORDER BY id");
             $id=$id->result_array();
             $id=$id[0]['music_id'];
             $id=json_decode($id);

@@ -1,11 +1,17 @@
 var qcloud = require('../../vendor/wafer2-client-sdk/index')
 var config = require('../../config')
+var api = require('../../utils/api.js');
+var Common = require('../../common')
+var util = require('../../utils/util.js');
+var app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    lists:[],
+    song_list:[],
       songArr:[]
   },
 
@@ -47,15 +53,17 @@ Page({
       success(result) {
         console.log(result);
         song_list = result.data.data.list
-        var song_lists=[]
+       var song_lists = [{ id: '', name: '', mp3Url: '', picUrl: '', singer:''}]
         var flag = result.data.flag
         var list = song_list
+        var count = 0
         //console.log("------------")
         //console.log(list)
-       
+        
 
         for (var key in list) {
-          console.log(list[key])
+         // console.log(list[key])
+  
          // wx.setStorageSync('music__id', list[key])
           wx.request({
             url: "https://www.zlclclc.cn/id",
@@ -63,34 +71,63 @@ Page({
             // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
             // header: {}, // 设置请求的 header
             data: {
-              id: list[key],
+              id: parseInt(list[key]),
               platform: "Neteasymusic",
 
             },
-            success: function (res) {
+            success(res) {
               //console.log(res)
               //console.log("----------post成功，获得数据")
               //console.log(res)
               //console.log(list[key])
-              var music_id = list[key]
+              //var music_id = list[key]
+
+              //console.log(res)
+             //console.log("----------post成功，获得数据")
+              //console.log(res)
+              //console.log(list[key])
+              //var music_id = list[key]
               var songData = {
-                id: music_id,
+                id: res.data.song.list.music_id,
                 name: res.data.song.list.music_name,
                 mp3Url: res.data.song.list.play_url,
                 picUrl: res.data.song.list.image_url,
-                singer: res.data.song.list.artists,
+                singer: res.data.song.list.artists
+              }
+              var name = "lists[" +count+ "].name"
+              var author = "lists[" + count + "].author"
+              var poster = "lists[" + count + "].poster"
+              var musicId = "lists[" + count + "].musicId"
+              var info = "lists[" + count + "].info"
+              var c=0
+              if(c==0){
+                wx.setStorageSync('fav_image', res.data.song.list.image_url)
+                c++;
+              }
+              if (res.data.song.list.music_name.length > 14) {
+                res.data.song.list.music_name = res.data.song.list.music_name.slice(0, 13) + "...";
               }
 
-              song_lists.push(songData)
+              that.setData({
+                [name]: res.data.song.list.music_name,
+                [author]: res.data.song.list.artists,
+                [poster]: res.data.song.list.image_url,
+                [musicId]: res.data.song.list.music_id,
+                [info]: res.data.song.list
+              })
+              count++;
             }
           })
 
         }
+       
+            //console.log(that.data.song_lists)
 
-        console.log(song_lists)
+        
         that.setData({
           song_list:song_lists
         })
+        console.log(that.data.song_list)
          
 
 
@@ -122,8 +159,7 @@ Page({
       }
     })
     
-   
-
+    
   
     //  wx.request({
     //   url: `${config.service.host}/weapp/Favorite`,
@@ -157,6 +193,29 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
+  tonow(event) {
+    var s=this.data.lists
+    var list=[]
+    console.log(s);
+    for (var key in s) {
+      list[key] = s[key].info.music_id
+    }
+    wx.setStorageSync('nowLists', list)
+    let songData = {
+      id: event.currentTarget.dataset.song.music_id,
+      name: event.currentTarget.dataset.song.music_name,
+      mp3Url: event.currentTarget.dataset.song.play_url,
+      picUrl: event.currentTarget.dataset.song.image_url,
+      singer: event.currentTarget.dataset.song.artists
+    }
+    app.globalData.issearchlaying = true// 设置搜索结果播放状态
+    // 将当前点击的歌曲保存在缓存中
+    wx.setStorageSync('clickdata', songData)
+    wx.switchTab({
+      url: '../now/index'
+    })
+  },
+
   onReady: function () {
 
   },
@@ -166,7 +225,6 @@ Page({
    */
   onShow: function () {
     var that=this
-   
      console.log(that.data.song_list)
      var song = that.data.song_list
      return;

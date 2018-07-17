@@ -5,6 +5,7 @@
     <text class='main_title '>{{item.name}}</text>
     <text class='sub_title '>{{item.author}}\n {{item.time}}</text>
   </view>
+  <image class="delete_img" src="delete.png"></image>
   <image class='movie_img' src='{{item.poster}}' data-src='{{item.poster}}' catchtap='previewImage'></image>
   </view>
 </view>

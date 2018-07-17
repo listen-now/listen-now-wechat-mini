@@ -14,6 +14,7 @@ Page({
    
   },
 
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -49,9 +50,20 @@ Page({
         var timee = util.formatTime(new Date());
       //console.log(time);
         var index = that.data.index
-      
-       
+        var name = "lists[" + index + "].name"
+        var author = "lists[" + index + "].author"
+        var duration = "lists[" + index + "].duration"
+        var poster = "lists[" + index + "].poster"
+        var musicId = "lists[" + index + "].musicId"
+        var time = "lists[" + index + "].time"
+        var info = "lists[" + index + "].info"
+        var index = this.data.index + 1;
+        
+        if (song.name.length > 14) {
+          song.name = song.name.slice(0, 13) + "...";
+        }
 
+         
       that.setData({
         index: index,
         [name]: song.name,
@@ -62,6 +74,7 @@ Page({
         [musicId]: song.id,
         [info]: song
       })
+      wx.setStorageSync('rec_image', song.poster)
       wx.setStorageSync('recentlist', that.data)
       wx.showToast({
         title: '收藏成功',
@@ -85,6 +98,24 @@ Page({
      wx.switchTab({
        url: '../now/index'
      })
+   },
+   deleted(e){
+     var that=this
+     //console.log(index);
+     var index=e.currentTarget.dataset.index
+     console.log(index);
+     var list=that.data.lists
+     console.log(list);
+     var lists= list.splice(index, 1);
+       console.log(lists);
+      that.setData({
+        index : that.data.index-1 ,
+        lists:list,
+ 
+      })
+      wx.setStorageSync('recentlist', that.data)
+ 
+
    },
 
   previewImage: function (event) {

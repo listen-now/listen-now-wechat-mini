@@ -35,6 +35,7 @@ Page({
    */
   onLoad: function (options) {
     var that = this
+   
     wx.request({
       url: "https://www.zlclclc.cn/Random_song_list",
       method: 'GET',
@@ -55,6 +56,13 @@ Page({
         // complete
       }
     })
+
+   var fav_image =  wx.getStorageSync('fav_image');
+   var rec_image = wx.getStorageSync('rec_image');
+   that.setData({
+     fav_image:fav_image,
+     rec_image: rec_image
+   })
   },
 
   /**
@@ -100,6 +108,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var that=this
     this.getHitohoto()
     this.setHitohoto()
     wx.setNavigationBarColor({
@@ -113,6 +122,49 @@ Page({
     // wx.setNavigationBarTitle({
     //   title: '当前页面'
     // })
+    if (wx.getStorageSync('userInfo')) {
+      var userInfo = wx.getStorageSync('userInfo')
+      that.setData({
+        userInfo: userInfo,
+        logged: true
+      })
+      wx.getSetting({
+        success: function (res) {
+          if (res.authSetting['scope.userInfo']) {
+
+            // 检查登录是否过期
+            wx.checkSession({
+              success: function () {
+                // 登录态未过期
+             
+                that.setData({
+                  userInfo: userInfo,
+                  logged: true
+                })
+
+                if (that.data.logged) return;
+
+                util.showBusy('正在登录');
+
+              },
+
+              fail: function () {
+                qcloud.clearSession();
+                // 登录态已过期，需重新登录
+                var options = {
+                  encryptedData: e.detail.encryptedData,
+                  iv: e.detail.iv,
+                  userInfo: userInfo
+                }
+                that.doLogin(options);
+              },
+            });
+          } else {
+            util.showModel('用户未授权', e.detail.errMsg);
+          }
+        }
+      });
+    }
   },
 
   /**
@@ -187,7 +239,11 @@ Page({
   // },
 
 
-
+  clearInput() {
+    this.setData({
+      inputVal: ''
+    })
+  },
   inputTyping(e) {
     this.setData({
       inputVal: e.detail.value
@@ -358,8 +414,10 @@ Page({
   //获取用户信息
   bindGetUserInfo: function (e) {
     var that = this;
+
     var userInfo = e.detail.userInfo;
     var signature = e.detail.signature
+    wx.setStorageSync('userInfo', userInfo)
     // 查看是否授权
     wx.getSetting({
       success: function (res) {

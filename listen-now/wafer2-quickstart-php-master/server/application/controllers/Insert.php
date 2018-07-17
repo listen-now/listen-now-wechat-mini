@@ -9,6 +9,7 @@ class Insert extends CI_Controller {
  public function index()
  {
  $this->load->database();
+
  $update = $_GET['update'];
  
  if ($update == 'insertMsg') {
@@ -22,6 +23,7 @@ class Insert extends CI_Controller {
  'code' => 1,
  'data' => [
  'msg' => 'success'
+ 
  ]
  ]);
  return;

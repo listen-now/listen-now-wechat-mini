@@ -25,9 +25,11 @@
     <view class="other-content">
       <view class="icon-choose">
      
-        <view class="download icon" wx:if='{{count==1}}'  bindtap='changecircle'></view>
-        <view class="download icon" wx:elif='{{count==2}}'  bindtap='changecircle'></view>
-        <view class="download icon" wx:elif='{{count==3}}'  bindtap='changecircle'></view>
+        <view class="download icon" wx:if='{{count==1}}'  bindtap='changecircle'><image src="/images/icons/xunhuan.png" style="width:50rpx; height:50rpx; margin-top:6rpx;" /></view>
+        <view class="download icon" wx:elif='{{count==2}}'  bindtap='changecircle'><image src="/images/icons/suiji.png" style="width:50rpx; height:50rpx; margin-top:6rpx;" /></view>
+        <view class="download icon" wx:elif='{{count==3}}'  bindtap='changecircle'><image src="/images/icons/danqu1.png" style="width:50rpx; height:50rpx; margin-top:6rpx;" /></view>
+
+
         <view class="like icon" bindtap='fav_song'></view>
         <view class="add icon" bindtap="addsong"></view>
       </view>

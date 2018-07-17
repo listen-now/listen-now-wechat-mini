@@ -165,7 +165,9 @@ Page({
   //界面载入
   onShow: function () {
     let that = this;
-    
+    that.setData({
+      isplaying: true,
+    })
     var operation = wx.getStorageSync('operation')
     console.log('-----操作是' + operation);
     if (operation == 'recoList' || operation == 'search')
@@ -188,6 +190,7 @@ Page({
    //console.log(lists)
     
      var id=id.id
+
      console.log(id)
      wx.request({
        url: "https://www.zlclclc.cn/id",
@@ -201,7 +204,8 @@ Page({
        // header: {}, // 设置请求的 header
        success: function (res) {
          console.log("post成功，获得数据");
-        console.log(res)
+         console.log(res)
+        
            that.setData({
              poster: res.data.song.list.image_url,
            })
@@ -415,6 +419,14 @@ Page({
       this.random();
       return;
     }
+    if (this.data.count == 3) {
+      wx.showToast({
+        title: "目前是单曲循环模式",
+        duration: 1000,
+
+      })
+      return
+    }
     var that=this
       var nowId=that.data.id
       var nowlists=that.data.nowlists
@@ -469,7 +481,7 @@ Page({
           title: '没有下一首歌',
           icon: '',
           image: '',
-          duration: 0,
+          duration: 1000,
           mask: true,
           success: function(res) {},
           fail: function(res) {},
@@ -484,6 +496,15 @@ Page({
     {
       this.random();
       return;
+    }
+    if(this.data.count==3)
+    {
+      wx.showToast({
+        title: "目前是单曲循环模式",
+        duration: 1000,
+       
+      })
+      return
     }
     var that = this
     var nowId = that.data.id
@@ -584,13 +605,15 @@ Page({
 
   //控制单曲循环
   onemusic(){
-
+     var that=this
      wx.seekBackgroundAudio({
        position: 0,
      })
       app.globalData.issearchlaying = true// 设置搜索结果播放状态
-      clearTimeout(timer);
-      that.onShow();
+     
+
+     that.onShow();
+      
   },
 
 
@@ -769,9 +792,9 @@ function Countdown(that) {
           if (count > 1.5||count < 0) {
             if(count>1)
             {
-              var step = that.data.step - (count-1) * 28
+              var step = that.data.step - (count ) * 62.3
             }else{
-              var step = that.data.step - (count+1 ) * 28
+              var step = that.data.step - (count) * 62.3
             }
          
             console.log(step)
@@ -779,7 +802,8 @@ function Countdown(that) {
               duration: 1000,
               timingFunction: 'ease',
             })
-            animation = animation.translateY(step).step({ duration: 1000 })
+            var systemInfo = wx.getSystemInfoSync();
+            animation = animation.translateY(step / 750 * systemInfo.windowWidth).step({ duration: 1000 })
             that.setData({
               animation1: animation.export(),
               step: step,
@@ -805,12 +829,13 @@ function Countdown(that) {
           //console.log(count)
           if (lists[res.currentPosition])
           {
-            var step=that.data.step-28
+            var step=that.data.step-62.3
             var animation = wx.createAnimation({
               duration: 1000,
               timingFunction: 'ease',
             })
-            animation=animation.translateY(step).step({ duration: 1000 })
+            var systemInfo = wx.getSystemInfoSync();
+            animation = animation.translateY(step / 750 * systemInfo.windowWidth).step({ duration: 1000 })
             that.setData({
               animation1: animation.export(),
               step:step,
@@ -861,6 +886,11 @@ function Countdown(that) {
           })
         }
       var count =that.data.count  //判断循环模式 ，1 是列表循环 ，2是随机播放，3是单曲循环
+      var operation = wx.getStorageSync('operation')
+      if ( operation == 'search') {
+        count=0;
+      }
+      wx.setStorageSync('operation', '')
      if (currentPosition == res.duration) {
         if(count==1)
         {
@@ -870,6 +900,9 @@ function Countdown(that) {
         }else{
           that.onemusic();
         }
+        that.setData({
+          isplaying: true,
+        })
     }
       }
     })

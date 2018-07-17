@@ -21,9 +21,12 @@
   </view>
   <view class="search-cell">
     <view class="weui-cell__bd">
-
-<input type="text" class="input-search" placeholder="" value="{{ inputVal }}" bindinput="inputTyping" auto-focus/>
-
+      <view  class="input-search">
+<input type="text" class="inputSearch" placeholder="" value="{{ inputVal }}" bindinput="inputTyping" auto-focus/>
+      </view>
+    </view>
+    <view class="icon-clear" bindtap="clearInput">
+      <icon type="clear" size="14"></icon>
     </view>
     <view class="weui-cell__ft">
       <button class="btn-search" type="primary" bindtap='inputTyping'>搜索</button>
@@ -84,11 +87,15 @@
     </view>
     <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
      <view class="menu">
-        <view class="menu_view"  wx:key="key">
-          <image src="/images/fm.png" mode="widthFix" class="menu3icon" bindtap='intoFav'></image>
+      <view class="menu_view">
+          <view class="favourite">
+          <image src="{{fav_image ? fav_image : '/images/fm.png'}}" mode="widthFix" class="menu3icon" bindtap='intoFav'></image>
           <text class="font">我喜欢的</text>
-          <image src="/images/fm.png" mode="widthFix" class="menu3icon" bindtap='intoRecent'></image>
+          </view>
+          <view class="recent">
+          <image src="{{rec_image ? rec_image : '/images/fm.png'}}" mode="widthFix" class="menu3icon" bindtap='intoRecent'></image>
           <text class="font">最近</text>
+          </view>
         </view>
       </view>
     </view>

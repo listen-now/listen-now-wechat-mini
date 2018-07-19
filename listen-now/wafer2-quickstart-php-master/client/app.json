@@ -43,19 +43,8 @@
         "selectedIconPath": "images/icons/now_selected.png",
         "pagePath": "pages/now/index",
         "text": "播放器"
-      },
-      {
-        "text": "我的",
-        "pagePath": "pages/my/my",
-        "iconPath": "images/icons/my.png",
-        "selectedIconPath": "images/icons/my_selected.png"
-      },
-      {
-        "text": "我的",
-        "pagePath": "pages/test/test",
-        "iconPath": "images/icons/my.png",
-        "selectedIconPath": "images/icons/my_selected.png"
       }
+     
     ]
   },
   "debug": true

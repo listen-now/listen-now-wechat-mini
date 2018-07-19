@@ -173,56 +173,24 @@ class Favorite extends CI_Controller
             $arr=json_encode($arr);
             $this->db->query("UPDATE fav_songs SET music_id='$arr' WHERE user_id='$openid'");
             return;
-
-
-
         }
-
-        if ($update == 'get_song') {
-
+        
+        if($update=='song_delete')
+        {
+            $arr=$_GET['arr'];
             $openid=$_GET['openid'];
-
-            $id=$this->db->query("SELECT music_id FROM fav_songs WHERE user_id='$openid'");
-            $id=$id->result_array();
-            $id=$id[0]['music_id'];
-            $id=json_decode($id);
+           
+            $this->db->query("UPDATE fav_songs SET music_id='$arr' WHERE user_id='$openid'");
             $this->json([
-                'code' => 1,
+              
                 'data' => [
                     'msg' => 'success',
-                    'id'=>$id
-                ]
-            ]);return;
-            //  $this->json([
-            //      'code' => 1,
-            //      'data' => [
-            //          'msg' => 'success',
-            //          'id'=>$id
-            //      ]
-            //  ]); return;
-            if(sizeof($id)==0)
-            {
-                $arr[0]=$data['musicId'];
-            }else
-            {
-                $arr=$id;
-                $arr[sizeof($arr)]=$data['musicId'];
-            }
-
-            $this->json([
-                'code' => 1,
-                'data' => [
-                    'msg' => 'success',
-                    'id'=>$arr
+                    'list'=>$arr
                 ]
             ]);
-            $arr=json_encode($arr);
-            $this->db->query("UPDATE fav_songs SET music_id='$arr' WHERE user_id='$openid'");
             return;
-
-
-
         }
+
 
 
     }}

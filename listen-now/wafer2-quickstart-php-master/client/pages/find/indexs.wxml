@@ -26,7 +26,7 @@
       </view>
     </view>
     <view class="icon-clear" bindtap="clearInput">
-      <icon type="clear" size="14"></icon>
+      <icon type="clear" size="14" hidden="{{inputVal.length == 0}}"></icon>
     </view>
     <view class="weui-cell__ft">
       <button class="btn-search" type="primary" bindtap='inputTyping'>搜索</button>
@@ -85,18 +85,14 @@
         </view>
       </view>
     </view>
-    <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
-     <view class="menu">
-      <view class="menu_view">
-          <view class="favourite">
-          <image src="{{fav_image ? fav_image : '/images/fm.png'}}" mode="widthFix" class="menu3icon" bindtap='intoFav'></image>
-          <text class="font">我喜欢的</text>
-          </view>
-          <view class="recent">
-          <image src="{{rec_image ? rec_image : '/images/fm.png'}}" mode="widthFix" class="menu3icon" bindtap='intoRecent'></image>
-          <text class="font">最近</text>
-          </view>
-        </view>
+    <view class="mylists" hidden="{{activeIndex != 2}}">
+      <view class="favourite">
+        <image style="width:350rpx; height:300rpx;" src="{{fav_image ? fav_image : '/images/4.jpg'}}"  bindtap='intoFav'></image>
+        <text class="font3">我喜欢的</text>
+      </view>
+      <view class="recent">
+        <image style="width:350rpx; height:300rpx;" src="{{rec_image ? rec_image : '/images/4.jpg'}}"   bindtap='intoRecent'></image>
+        <text class="font3">最近</text>
       </view>
     </view>
     <view class="weui-tab__content" hidden="{{activeIndex != 3}}">排行榜</view>

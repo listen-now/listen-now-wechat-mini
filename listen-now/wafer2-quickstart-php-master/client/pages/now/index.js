@@ -127,6 +127,9 @@ Page({
     })
   },
   onLoad: function () {
+    that.setData({
+      isplaying: true,
+    })
      ////后台页面还在运行时，再进入该页面不会触发onload
     var cur = wx.getStorageInfoSync('currentPosition')
     
@@ -165,31 +168,41 @@ Page({
   //界面载入
   onShow: function () {
     let that = this;
-    that.setData({
-      isplaying: true,
-    })
+    var id = wx.getStorageSync('clickdata');
+    var id = id.id
     var operation = wx.getStorageSync('operation')
     console.log('-----操作是' + operation);
-    if (operation == 'recoList' || operation == 'search')
+    if(id==that.data.id)
+    {
+      operation=''
+    }
+    that.setData({
+      id:id
+    })
+    if (operation == 'recoList' || operation == 'search'||operation=='recent'||operation=='fav_song')
     {
       clearTimeout(timer);
+      that.setData({
+        operation: operation
+      })
     }
      wx.setStorageSync('operation', '')
-
+   
     //
     var cur = wx.getStorageInfoSync('currentPosition')
     if (cur == 0) {
       clearTimeout(timer);
     }
     
-    var id = wx.getStorageSync('clickdata');
+  
     var nowlists = wx.getStorageSync('nowLists')
     that.setData({
       nowlists: nowlists
     })
+   
    //console.log(lists)
     
-     var id=id.id
+    
 
      console.log(id)
      wx.request({
@@ -218,6 +231,7 @@ Page({
          // complete
        }
      })
+     
     console.log('初始化')
     Common.asyncGetStorage('clickdata')//本地缓存
       .then(data => {
@@ -232,8 +246,9 @@ Page({
           author: data.singer,
           
         })
+        wx.setNavigationBarTitle({title:'正在播放：'+ data.name})  
         console.log('准备播放音乐')
-
+        
         wx.getBackgroundAudioPlayerState({
           success: function (res) {
             if (res.dataUrl == data.mp3Url) {
@@ -242,7 +257,7 @@ Page({
               //return Common.playMusic(data.mp3Url, data.name, data.picUrl)
               console.log('  └─开始播放')
              
-
+             
               return myPlayMusic(data.mp3Url, data.name, data.picUrl, that)
             }
           },
@@ -298,6 +313,7 @@ Page({
             isplaying: true
           })
           // 设置时长
+        
           that.setData({
             sumduration: tempduration
           })
@@ -316,6 +332,7 @@ Page({
   //音乐播放
   audioPlay: function () {
     let that = this;
+    
     clearTimeout(timer);
     console.log("音乐播放按钮")
     //背景音乐信息
@@ -339,6 +356,7 @@ Page({
           key: 'clickdata',
           success: function (res) {
             myPlayMusic(res.data.mp3Url, res.data.name, res.data.picUrl, that)
+            
             that.setData({
               isplaying: true
             })
@@ -415,10 +433,21 @@ Page({
   },
   //上一曲
   prev(){
+    var operation = this.data.operation
+    console.log(operation)
+    if (operation == 'search') {
+      wx.showToast({
+        title: "不在歌单列表中",
+        duration: 1000,
+
+      })
+      return
+    }
     if (this.data.count == 2) {
       this.random();
       return;
     }
+    
     if (this.data.count == 3) {
       wx.showToast({
         title: "目前是单曲循环模式",
@@ -473,12 +502,15 @@ Page({
             wx.setStorageSync('clickdata', songData)
             console.log("[[[播放上一首成功")
             clearTimeout(timer);
-            that.onShow();
+            setTimeout(function () {
+              that.onShow();
+            }, 300)
+            
           }
         })
       }else{
         wx.showToast({
-          title: '没有下一首歌',
+          title: '没有上一首歌',
           icon: '',
           image: '',
           duration: 1000,
@@ -492,11 +524,23 @@ Page({
 
 //下一曲
   next() {
+    var operation = this.data.operation
+    console.log('+++++++++++++++++++')
+    console.log(operation)
+    if (operation == 'search') {
+      wx.showToast({
+        title: "不在歌单列表中",
+        duration: 1000,
+
+      })
+      return
+    }
     if(this.data.count==2)
     {
       this.random();
       return;
     }
+   
     if(this.data.count==3)
     {
       wx.showToast({
@@ -552,7 +596,16 @@ Page({
         wx.setStorageSync('clickdata', songData)
         console.log("[[[播放xia一首成功")
         clearTimeout(timer);
-        that.onShow();
+        wx.showLoading({
+          title: '正在加载',
+          mask: true
+        })
+        setTimeout(function () {
+          that.setData({
+            isplaying: true,
+          })
+          that.onShow();
+        }, 300)
       }
     })
   },
@@ -560,6 +613,16 @@ Page({
  //随机播放函数
   random(){
     var that = this
+    var operation = this.data.operation
+    console.log(operation)
+    if (operation == 'search') {
+      wx.showToast({
+        title: "不在歌单列表中",
+        duration: 1000,
+
+      })
+      return
+    }
     var nowId = that.data.id
     var nowlists = that.data.nowlists
     //console.log('-----------'+nowlists.length)
@@ -596,7 +659,16 @@ Page({
         wx.setStorageSync('clickdata', songData)
         console.log("[[[播放xia一首成功")
         clearTimeout(timer);
-        that.onShow();
+        wx.showLoading({
+          title: '正在加载',
+          mask: true
+        })
+        setTimeout(function () {
+          that.setData({
+            isplaying: true,
+          })
+          that.onShow();
+        }, 300)
       }
     })
    
@@ -611,8 +683,17 @@ Page({
      })
       app.globalData.issearchlaying = true// 设置搜索结果播放状态
      
+      wx.showLoading({
+        title: '正在加载',
+        mask: true
+      })
 
-     that.onShow();
+      setTimeout(function () {
+        that.setData({
+          isplaying: true,
+        })
+        that.onShow();
+      }, 500)
       
   },
 
@@ -719,7 +800,9 @@ function Countdown(that) {
   timer = setTimeout(function () {
     wx.getBackgroundAudioPlayerState({
       success: function (res) {
-      
+        that.setData({
+          isplaying: true,
+        })
            
         res.currentPosition = parseInt(res.currentPosition);
        
@@ -773,7 +856,7 @@ function Countdown(that) {
               if (key > that.data.currentPosition && key < res.currentPosition) {
                 if (lists[key] && flag == 0) {
                   that.setData({
-                    currentlrc: lists[key]
+                    currentlrc: lists[key]   //控制当前歌词，用于判断是否变蓝
                   })
                   flag = 1;
                 }
@@ -792,9 +875,9 @@ function Countdown(that) {
           if (count > 1.5||count < 0) {
             if(count>1)
             {
-              var step = that.data.step - (count ) * 62.3
+              var step = that.data.step - (count ) * 64
             }else{
-              var step = that.data.step - (count) * 62.3
+              var step = that.data.step - (count) * 64
             }
          
             console.log(step)
@@ -829,7 +912,7 @@ function Countdown(that) {
           //console.log(count)
           if (lists[res.currentPosition])
           {
-            var step=that.data.step-62.3
+            var step=that.data.step-64
             var animation = wx.createAnimation({
               duration: 1000,
               timingFunction: 'ease',

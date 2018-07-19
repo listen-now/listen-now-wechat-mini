@@ -20,6 +20,7 @@ const operation = {
                 title: title,
                 coverImgUrl: pic,
                 success: function () {
+                  
                     resolve(true)
                 },
                 fail: function () {
@@ -28,6 +29,7 @@ const operation = {
             })
         })
     },
+
     asyncGetStorage: function (key) {
         return new Promise((resolve, reject) => {
           console.log("读取缓存中的数据",key)

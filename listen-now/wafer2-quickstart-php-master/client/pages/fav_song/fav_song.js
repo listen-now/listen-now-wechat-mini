@@ -23,9 +23,13 @@ Page({
      console.log("进入收藏歌单")
     var oper=e.oper
     var that = this
+    
+    var openid = wx.getStorageSync('openid')
+
+   
     var data = wx.getStorageSync('fav_song')
     //console.log(data);
-    var openid = wx.getStorageSync('openid')
+    
 
     var id = data.id
     var name = data.name
@@ -104,9 +108,9 @@ Page({
                 wx.setStorageSync('fav_image', res.data.song.list.image_url)
                 c++;
               }
-              if (res.data.song.list.music_name.length > 14) {
-                res.data.song.list.music_name = res.data.song.list.music_name.slice(0, 13) + "...";
-              }
+              // if (res.data.song.list.music_name.length > 14) {
+              //   res.data.song.list.music_name = res.data.song.list.music_name.slice(0, 13) + "...";
+              // }
 
               that.setData({
                 [name]: res.data.song.list.music_name,
@@ -193,24 +197,30 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
+
   tonow(event) {
+    //console.log(event)
+    var index = parseInt(event.currentTarget.dataset.index)
+   // console.log(index);
     var s=this.data.lists
     var list=[]
-    console.log(s);
-    for (var key in s) {
-      list[key] = s[key].info.music_id
-    }
+   // console.log(s[index].info);
+     for (var key in s) {
+       list[key] = s[key].info.music_id
+     }
+     //console.log(list)
     wx.setStorageSync('nowLists', list)
     let songData = {
-      id: event.currentTarget.dataset.song.music_id,
-      name: event.currentTarget.dataset.song.music_name,
-      mp3Url: event.currentTarget.dataset.song.play_url,
-      picUrl: event.currentTarget.dataset.song.image_url,
-      singer: event.currentTarget.dataset.song.artists
+      id: s[index].info.music_id,
+      name: s[index].info.music_name,
+      mp3Url: s[index].info.play_url,
+      picUrl: s[index].info.image_url,
+      singer: s[index].info.artists
     }
     app.globalData.issearchlaying = true// 设置搜索结果播放状态
     // 将当前点击的歌曲保存在缓存中
     wx.setStorageSync('clickdata', songData)
+    wx.setStorageSync('operation', 'fav_song')
     wx.switchTab({
       url: '../now/index'
     })
@@ -260,6 +270,59 @@ Page({
 
     
    
+  },
+
+  // deleted(e){
+  //    console.log(e);
+  //    var index = e.currentTarget.dataset.index
+
+  // },
+
+  deleted(e) {
+    var that = this
+    //console.log(index);
+    var index = e.currentTarget.dataset.index
+    //console.log(index);
+    var list = that.data.lists
+    console.log(list);
+    var lists = list.splice(index, 1);
+    console.log(lists);
+    that.setData({
+      lists: list,
+    })
+    var arr=[]
+    for(var key in list)
+    {
+         arr[key]=list[key].musicId
+    }
+    console.log(arr)
+    var openid = wx.getStorageSync('openid')
+
+    wx.request({
+      url: `${config.service.host}/weapp/Favorite`,
+      data: {
+        openid: openid,
+        arr: arr,
+        update: 'song_delete'
+      },
+      //login: true,
+      success(result) {
+        console.log(result);
+        wx.showToast({
+          title: '删除成功',
+          duration: 1000
+        });
+        // 等待半秒，toast消失后返回上一页
+        setTimeout(function () {
+          //wx.navigateBack();
+        }, 500);
+      },
+      fail(error) {
+        util.showModel('失败', error);
+      }
+    })
+
+
   },
 
   /**

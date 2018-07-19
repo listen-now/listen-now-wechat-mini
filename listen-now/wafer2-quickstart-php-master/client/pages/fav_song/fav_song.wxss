@@ -13,6 +13,11 @@
   margin-right: 10rpx;
 }
 
+.wid{
+  width: 93%;
+  float:left;
+}
+
 .head_img_hover {
   width: 65%;
   height: 230rpx;
@@ -51,7 +56,7 @@
   width: 135rpx;
   float: right;
   margin-top: 15rpx;
-  margin-right: 15rpx;
+  margin-right: 5rpx;
   border: 2px solid #d9d9d9;
   border-radius:50%;
 }

@@ -184,10 +184,11 @@
   font-size: 22rpx;
   line-height: 28rpx;
 }
+
 .font{
    height: 60rpx;
    text-align: center;
-   color: 999
+   color: #999;
 }
 
 .menu_view1 {
@@ -196,10 +197,24 @@
   text-align: center;
 }
 
+.mylists{
+  width: 100%;
+}
 
+.favourite{
+  width: 45%;
+  float: left;
+  margin-left: 18rpx;
+}
 
 .recent{
-  position: relative;
-  left: 250rpx;
-  top:-310rpx;
+  width:45%;
+  float:left;
+  margin-left: 22rpx;
+}
+
+.font3{
+  height: 60rpx;
+  color: #999;
+  margin-left: 120rpx;
 }

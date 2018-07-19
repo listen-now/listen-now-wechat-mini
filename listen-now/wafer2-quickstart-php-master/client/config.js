@@ -4,8 +4,9 @@
 
 // 此处主机域名修改成腾讯云解决方案分配的域名
 
-var host = 'https://fcmsbbc8.qcloud.la';
-
+//var host = 'https://fcmsbbc8.qcloud.la';
+var host = 'https://876933282.ddhelp.xyz';
+//https://876933282.ddhelp.xyz
 var config = {
 
     // 下面的地址配合云端 Demo 工作

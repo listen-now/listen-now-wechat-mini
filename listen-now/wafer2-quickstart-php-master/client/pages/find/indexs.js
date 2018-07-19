@@ -17,7 +17,7 @@ Page({
     hitokotoIcon: '/images/icons/hitokoto.png',
     avatarIcon: 'https://listen1.52ledao.com/music/cd.jpg',
     listenNowLogo: '/images/logo.png',
-    tabs: ["热门歌单", "虾米音乐","我的音乐" ],
+    tabs: ["热门歌单1", "热门歌单2","我的歌单" ],
     activeIndex: 0,
     userInfo: {},
     logged: false,
@@ -260,10 +260,10 @@ Page({
     }
     app.globalData.issearchlaying = true// 设置搜索结果播放状态
     // 将当前点击的歌曲保存在缓存中
-    wx.removeStorageSync('clickdata')
-    wx.removeStorageSync('operation')
+   
     wx.setStorageSync('clickdata', songData)
-    wx.setStorageSync('operation', 'search')
+    var search='search'
+    wx.setStorageSync('operation', search)
 
     wx.navigateTo({
       url: '../now/index'
@@ -463,6 +463,8 @@ Page({
                         'content-type': 'application/json'
                       },
                       success: function (res) {
+                        console.log('得到')
+                        console.log(res)
                         wx.setStorageSync('name', res.data.name);//将获取信息写入本地缓存
                         wx.setStorageSync('openid', res.data.openid);
                         wx.setStorageSync('imgUrl', res.data.imgurl);

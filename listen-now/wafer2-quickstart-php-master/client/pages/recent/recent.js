@@ -85,6 +85,7 @@ Page({
 
    tonow(event){
      console.log(event)
+     wx.setStorageSync('operation','recent')
      let songData = {
        id: event.currentTarget.dataset.song.id,
        name: event.currentTarget.dataset.song.name,
@@ -109,7 +110,7 @@ Page({
      var lists= list.splice(index, 1);
        console.log(lists);
       that.setData({
-        index : that.data.index-1 ,
+        index : that.data.index-1,
         lists:list,
  
       })

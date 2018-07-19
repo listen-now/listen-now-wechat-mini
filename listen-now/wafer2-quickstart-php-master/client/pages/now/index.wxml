@@ -13,7 +13,7 @@
 
     <!--歌词-->
     <view class="lyric-content" hidden="{{islyric}}" style="flex:1;margin-top:30rpx;overflow-y: scroll;"bindtap="showCircle" >
-      <view class="lyric" style="overflow-y: scroll;margin-top:350rpx;" animation="{{animation1}}">
+      <view class="lyric" style="overflow-y: scroll;margin-top:370rpx;" animation="{{animation1}}">
         <block wx:for="{{lyricArr}}" wx:key="key">
           <view wx:if="{{item==currentlrc && index - currentPosition <jiangee}}" style="color:cornflowerblue"> {{item}} </view>
           <view wx:else style="color:white"> {{item}} </view>

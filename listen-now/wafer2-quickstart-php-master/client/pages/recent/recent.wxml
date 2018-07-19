@@ -1,7 +1,7 @@
-<view wx:for="{{lists}}" wx:key="key" style="background-image: url(yy.jpg)" data-song='{{item.info}}'>
+<view wx:for="{{lists}}" wx:key="key" style="background-image: url(yy.jpg)" >
 <view class='container'>
-  <view class='head_img' style=" background-image: url({{item.poster}});">
-  <view class="wid" bindtap='tonow'>
+  <view class='head_img' style="background-image: url({{item.poster}});">
+  <view class="wid" bindtap='tonow' data-song='{{item.info}}'>
   <view class='head_img_hover'>
     <text class='main_title '>{{item.name}}</text>
     <text class='sub_title '>{{item.author}}\n {{item.time}}</text>

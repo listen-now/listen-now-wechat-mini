@@ -59,8 +59,8 @@ class Users extends CI_Controller {
             $openid = $arr['openid'];
             $session_key = $arr['session_key'];
 
-           // $con = mysqli_connect('localhost', 'root', 'wx45090c5e43a84a30');//连接数据库
-              $con = mysqli_connect('localhost', 'root', '7FjgPz2w');//连接数据库
+            $con = mysqli_connect('localhost', 'root', 'wx45090c5e43a84a30');//连接数据库
+           //   $con = mysqli_connect('localhost', 'root', '7FjgPz2w');//连接数据库
             if ($con) {
                 if (mysqli_select_db($con, 'listen-now')) {
                     $sql1 = "select * from user where openid = '$openid'";

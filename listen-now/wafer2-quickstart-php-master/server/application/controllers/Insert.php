@@ -17,12 +17,13 @@ class Insert extends CI_Controller {
  $num = $_GET['num'];
  $msg = $_GET['msg'];
 
- $this->db->query("INSERT INTO test(name,num,msg) VALUE ('$name',$num,'$msg')");
-
+ $this->db->query("INSERT INTO test2(name,num,msg) VALUE ('$name',$num,'$msg')");
+  $resulst= $this->db->query("SELECT * FROM test2");
+  $resulst=$resulst->result_array();
  $this->json([
  'code' => 1,
  'data' => [
- 'msg' => 'success'
+ 'msg' =>  $resulst
  
  ]
  ]);

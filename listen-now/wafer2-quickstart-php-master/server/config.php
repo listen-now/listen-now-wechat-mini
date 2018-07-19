@@ -25,8 +25,8 @@ $config = [
         'port' => 3306,
         'user' => 'root',
         'db'   => 'listen-now',
-        //'pass' => 'wx45090c5e43a84a30',
-        'pass' => '7FjgPz2w',//生产环境
+        'pass' => 'wx45090c5e43a84a30',
+        //'pass' => '7FjgPz2w',//生产环境
         'char' => 'utf8mb4'
     ],
 

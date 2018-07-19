@@ -7,9 +7,10 @@ var timer; // 计时器
 Page({
   data: {
     count:1,
+   
     xunhuang:'列表循环',//默认列表循环
     currentPosition:0,
-    currentlrc:'',
+    currentlrc:'_',
     animation1:{},
     step:0,
     margin:40,
@@ -127,9 +128,14 @@ Page({
     })
   },
   onLoad: function () {
+    
     that.setData({
-      isplaying: true,
+      // animation1: {},
+      // step: -9600,
+      // currentlrc: "",
+       isplaying: true,
     })
+   
      ////后台页面还在运行时，再进入该页面不会触发onload
     var cur = wx.getStorageInfoSync('currentPosition')
     
@@ -167,6 +173,7 @@ Page({
   },
   //界面载入
   onShow: function () {
+    
     let that = this;
     var id = wx.getStorageSync('clickdata');
     var id = id.id
@@ -842,6 +849,7 @@ function Countdown(that) {
                   that.setData({
                     currentlrc: lists[key]
                   })
+                
                   flag=1;
                 }
                 count--;
@@ -879,6 +887,8 @@ function Countdown(that) {
             }else{
               var step = that.data.step - (count) * 64
             }
+
+            
          
             console.log(step)
             var animation = wx.createAnimation({
@@ -912,6 +922,7 @@ function Countdown(that) {
           //console.log(count)
           if (lists[res.currentPosition])
           {
+            
             var step=that.data.step-64
             var animation = wx.createAnimation({
               duration: 1000,
@@ -923,14 +934,17 @@ function Countdown(that) {
               animation1: animation.export(),
               step:step,
               currentlrc: lists[res.currentPosition],
+            
               currentkey: res.currentPosition
             })
+           
             //console.log(that.data.currentlrc)
 
             if (res.currentPosition==0){
+         
               that.setData({
                 animation1:{},
-                step: 0,
+                step:0,
                 currentlrc: ""
               })
             }

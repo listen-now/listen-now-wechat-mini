@@ -38,7 +38,11 @@ Page({
    
     wx.request({
       url: "https://www.zlclclc.cn/Random_song_list",
-      method: 'GET',
+      method: 'POST',
+      data:{
+        platform: "Neteasymusic"
+      
+      },
       // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
       // header: {}, // 设置请求的 header
       success: function (res) {
@@ -84,9 +88,13 @@ Page({
     var that = this;
     wx.request({
       url: "https://www.zlclclc.cn/Random_song_list",
-      method: 'GET',
+    
       // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
       // header: {}, // 设置请求的 header
+      data:{
+        platform: "Neteasymusic"
+      },
+      method: 'POST',
       success: function (res) {
         //console.log("post成功，获得数据");
         //console.log(res);

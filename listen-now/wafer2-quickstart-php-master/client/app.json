@@ -17,7 +17,9 @@
     "pages/test/test",
     "pages/fav_song/fav_song",
     "pages/recent/recent",
-    "pages/recoList/recoList"
+    "pages/recoList/recoList",
+    "pages/add_collect_list/collect_list",
+    "pages/collect_list_detail/collect_list"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -56,7 +58,6 @@
         "pagePath": "pages/test/test",
         "text": "我的"
       }
-     
     ]
   },
   "debug": true

@@ -60,13 +60,17 @@ Page({
         // complete
       }
     })
-
+  //判断是否有喜欢/最近的歌曲的照片
    var fav_image =  wx.getStorageSync('fav_image');
    var rec_image = wx.getStorageSync('rec_image');
    that.setData({
      fav_image:fav_image,
      rec_image: rec_image
    })
+
+  
+
+
   },
 
   /**
@@ -74,6 +78,11 @@ Page({
    */
   onReady: function () {
 
+  },
+  addlist(){
+      wx.navigateTo({
+        url: '/pages/add_collect_list/collect_list',
+      })
   },
 
   intoRecent(){
@@ -173,11 +182,39 @@ Page({
         }
       });
     }
+    //获得自建歌单列表
+    
+    that.get_list();
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
+  get_list(){
+    var that=this
+    var openid = wx.getStorageSync('openid')
+    wx.request({
+      url: `${config.service.host}/weapp/collect_list`,
+      data: {
+        openid: openid,
+        update: 'get_collect_list'
+      },
+      //login: true,
+      success(result) {
+        console.log(result);
+
+        var collect_list = result.data.data.name_list;
+        that.setData({
+          collect_list: collect_list
+        })
+
+      },
+      fail(error) {
+        util.showModel('失败', error);
+      }
+    })
+    return;
+  },
   onHide: function () {
 
   },
@@ -228,6 +265,14 @@ Page({
       url: '/pages/recoList/recoList',
     })
     wx.setStorageSync('listid', listid)
+
+  },
+  intoCollect(e){
+    var name =e.currentTarget.dataset.name
+    
+    wx.navigateTo({
+      url: '/pages/collect_list_detail/collect_list?oper=1&name='+name,
+    })
 
   },
 
@@ -422,7 +467,7 @@ Page({
   //获取用户信息
   bindGetUserInfo: function (e) {
     var that = this;
-
+    
     var userInfo = e.detail.userInfo;
     var signature = e.detail.signature
     wx.setStorageSync('userInfo', userInfo)
@@ -443,7 +488,7 @@ Page({
 
 
               var nickName = userInfo.nickName
-
+           
               var sex = userInfo.gender
               var city = userInfo.city
               var province = userInfo.province
@@ -477,7 +522,7 @@ Page({
                         wx.setStorageSync('openid', res.data.openid);
                         wx.setStorageSync('imgUrl', res.data.imgurl);
                         wx.setStorageSync('sex', res.data.sex);
-
+                        that.get_list();
                         //console.log(res.data);
 
                       }
@@ -512,6 +557,7 @@ Page({
         }
       }
     });
+   
   },
 
   /**

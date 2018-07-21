@@ -85,15 +85,40 @@
         </view>
       </view>
     </view>
-    <view class="mylists" hidden="{{activeIndex != 2}}">
-      <view class="favourite">
+    
+    <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
+     <view class="menu">
+        <view class="menu_view"   >
+          <image src="{{fav_image ? fav_image : '/images/6.jpg'}}"  mode="widthFix" class="menu3icon" bindtap='intoFav'></image>
+        <text class="font">我喜欢的</text>
+        </view>
+
+  <view class="menu_view"   >
+          <image  src="{{rec_image ? rec_image : '/images/5.jpeg'}}"   mode="widthFix" class="menu3icon"  bindtap='intoRecent'></image>
+        <text class="font">最近</text>
+      </view>
+
+      <view class="menu_view"  wx:for="{{collect_list}}" >
+          <image  src="{{rec_image ? rec_image : '/images/5.jpeg'}}"   mode="widthFix" class="menu3icon"  bindtap='intoCollect' data-name='{{item}}'></image>
+        <text class="font">{{item}}</text>
+      </view>
+
+      <view class="menu_view"   >
+          <image src='/images/icons/add1.png' mode="widthFix" class="menu3icon" style='height:50rpx;width:50rpx;position:relative;top:55rpx' bindtap='addlist' > </image>
+        <text class="font" style='position:relative;top:55rpx' >新建歌单</text>
+      </view>
+   
+     
+</view>
+
+      <!-- <view class="favourite">
         <image style="width:350rpx; height:300rpx;" src="{{fav_image ? fav_image : '/images/4.jpg'}}"  bindtap='intoFav'></image>
         <text class="font3">我喜欢的</text>
       </view>
       <view class="recent">
         <image style="width:350rpx; height:300rpx;" src="{{rec_image ? rec_image : '/images/4.jpg'}}"   bindtap='intoRecent'></image>
         <text class="font3">最近</text>
-      </view>
+      </view> -->
     </view>
     <view class="weui-tab__content" hidden="{{activeIndex != 3}}">排行榜</view>
   </view>

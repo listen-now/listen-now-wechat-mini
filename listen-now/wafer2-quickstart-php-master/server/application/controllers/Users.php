@@ -78,7 +78,8 @@ class Users extends CI_Controller {
                         }
                         $sql = "insert into user(nick,imgUrl,sex,openid,session_key,city,province,country)
                                          values ('$nickName','$imgUrl','$sex','$openid','$session_key','$city','$province','$country')";
-                         $this->db->query("INSERT INTO fav_songs(user_id) VALUE ('$openid')");
+                        $this->db->query("INSERT IGNORE INTO fav_songs(user_id) VALUE ('$openid')"); //最喜欢歌单
+                        $this->db->query("INSERT IGNORE INTO user_collect_lists_name(openid) VALUE ('$openid')"); //收藏歌单
                        
                         if (mysqli_query($con, $sql)) {
                             $arr['nick'] = $nickName;

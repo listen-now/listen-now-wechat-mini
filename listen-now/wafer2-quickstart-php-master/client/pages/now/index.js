@@ -26,8 +26,8 @@ Page({
     lyricArr: [],
     isadd: false,
     items: [
-      { name: 'recent', value: '最近' },
-      { name: 'like', value: '我的收藏' }
+      '最近' ,
+      '我的收藏' 
     ],
     progress: 0,
     minute: 0,
@@ -66,21 +66,32 @@ Page({
 
   },
   //收藏
-   recent(e){
+   collect(e){
+    var that=this
     console.log(e)
     var id=e.currentTarget.dataset.id
+    var name = e.currentTarget.dataset.name
     wx.setStorageSync('recent', this.data)
+    wx.setStorageSync('fav_song', this.data)
     if(id==0)
     {
       wx.navigateTo({
         url: '/pages/recent/recent?id=1',
       })
+      return;
+    }else if(id==1)
+    {
+      that.fav_song();
+      return;
     }
+    wx.navigateTo({
+      url: '/pages/collect_list_detail/collect_list?name='+name+'&oper=0',
+    })
   },
 
   //收藏最喜欢歌曲
   fav_song(){
-    console.log(this.data)
+    //console.log(this.data)
     wx.setStorageSync('fav_song', this.data)
     wx.navigateTo({
       url: '/pages/fav_song/fav_song',
@@ -96,6 +107,7 @@ Page({
       percent: '0'
     })
   },
+  
   //音乐切换
   radioChange: function (e) {
     console.log("音乐切换")
@@ -171,6 +183,10 @@ Page({
       title: '正在播放'
     })
   },
+  onReady: function () {
+
+  },
+
   //界面载入
   onShow: function () {
     
@@ -186,6 +202,8 @@ Page({
     that.setData({
       id:id
     })
+
+    //通过进入界面的方式判定是否clear timer
     if (operation == 'recoList' || operation == 'search'||operation=='recent'||operation=='fav_song')
     {
       clearTimeout(timer);
@@ -208,7 +226,30 @@ Page({
     })
    
    //console.log(lists)
+   //从数据库中获取该用户歌单列表
+      var openid = wx.getStorageSync('openid');
+      wx.request({
+        url: 'https://fcmsbbc8.qcloud.la/Collect_list',
+        data: {
+          openid: openid,
+          update: 'get_collect_list'
+        },
+        //login: true,
+        success(result) {
+          console.log(result);
+          var collect_lists = result.data.data.name_list
+            collect_lists = ['最近', '我的收藏'].concat(collect_lists);
+            that.setData({
+              items: collect_lists
+            })
+       
+         
+        },
+      })
+
     
+
+
     
 
      console.log(id)
